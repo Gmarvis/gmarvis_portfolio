@@ -11,7 +11,7 @@ const LinkItems = [
   },
   {
     name: "Skills",
-    path: "",
+    path: "#skills",
   },
   {
     name: "Projects",
@@ -27,11 +27,17 @@ const NavBar = () => {
   const [openMobileNav, setOpenMobileNav] = useState(false);
   return (
     <div className="w-full px-24 fixed z-40 bg-white mobile:max-sm:px-5 shadow-md flex justify-between  items-center py-5">
-      <h3 className="font-bold text-24 text-themecolor">Sam Gmarvis</h3>
+      <h3 className="font-bold text-24 text-themecolor text-[18px]">
+        PORTFOLIO
+      </h3>
 
-      <div className="navItems flex gap-3 mobile:max-sm:hidden">
+      <div className="navItems flex gap-3 mobile:max-sm:hidden text-xs">
         {LinkItems.map((link, i) => (
-          <Link key={i} href={link.path}>
+          <Link
+            key={i}
+            href={link.path}
+            className="hover:text-themecolor delay-300"
+          >
             {link.name}
           </Link>
         ))}
