@@ -17,6 +17,7 @@ import { SiFirebase } from "react-icons/si";
 import { RiSupabaseFill } from "react-icons/ri";
 import { BiDownload } from "react-icons/bi";
 import FloatingSideBar from "@/components/FloatingSideBar";
+import Projects from "@/components/Projects";
 export default function Home() {
   const skills = [
     {
@@ -206,7 +207,7 @@ export default function Home() {
           </div>
         </div>
         <div id="skills" className="skills px-24 mobile:max-sm:px-5 mb-5">
-          <h3>Skills and Technologies</h3>
+          <h3 className=" text-themecolor">Skills and Technologies</h3>
           <div className="grid w-full grid-cols-4 gap-4">
             {skills.map((skill, i) => (
               <div
@@ -221,7 +222,10 @@ export default function Home() {
         </div>
 
         <div className="projects px-24 mobile:max-sm:px-5">
-          <h3>Projects</h3>
+          <h3 className=" text-themecolor">Projects</h3>
+          <div className="flex justify-center items-center">
+            <Projects />
+          </div>
         </div>
       </div>
       <div className="fixed top-[30vh] right-5 mobile:max-sm:hidden">
