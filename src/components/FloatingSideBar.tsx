@@ -35,9 +35,14 @@ export default function FloatingSideBar() {
         <Link
           href={link.path}
           key={i}
-          className="shadow-md p-3 rounded-full text-themecolor text-[18px]"
+          className="flex flex-col justify-center items-center"
         >
-          {link.icon}
+          <div className="icon shadow-md p-3 rounded-full text-themecolor text-[18px]">
+            {link.icon}
+          </div>
+          <span className="hidden mobile:max-sm:block text-xs">
+            {link.name}
+          </span>
         </Link>
       ))}
     </div>
