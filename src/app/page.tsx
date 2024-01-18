@@ -16,6 +16,7 @@ import { SiMongodb } from "react-icons/si";
 import { SiFirebase } from "react-icons/si";
 import { RiSupabaseFill } from "react-icons/ri";
 import { BiDownload } from "react-icons/bi";
+import FloatingSideBar from "@/components/FloatingSideBar";
 export default function Home() {
   const skills = [
     {
@@ -156,7 +157,7 @@ export default function Home() {
   // console.log(skills.length);
 
   return (
-    <main className="min-h-screen scroll-smooth">
+    <main className="min-h-screen scroll-smooth relative">
       <NavBar />
       <div className="pt-[64px]">
         <div className="hero-section  w-full flex justify-center items-center gap-20  px-24 mobile:max-sm:px-5 py-10">
@@ -222,6 +223,9 @@ export default function Home() {
         <div className="projects px-24 mobile:max-sm:px-5">
           <h3>Projects</h3>
         </div>
+      </div>
+      <div className="fixed top-[30vh] right-5">
+        <FloatingSideBar />
       </div>
     </main>
   );
