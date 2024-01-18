@@ -159,7 +159,7 @@ export default function Home() {
   return (
     <main className="min-h-screen scroll-smooth relative">
       <NavBar />
-      <div className="pt-[64px]">
+      <div className="pt-[64px] mobile:max-sm:pb-[70px]">
         <div className="hero-section  w-full flex justify-center items-center gap-20  px-24 mobile:max-sm:px-5 py-10">
           <div className="bio w-[50%] mobile:max-sm:w-full justify-center mobile:max-sm:items-center mobile:max-sm:text-center  flex flex-col gap-2">
             <h1>Sam Gmarvis Njong</h1>
@@ -224,7 +224,10 @@ export default function Home() {
           <h3>Projects</h3>
         </div>
       </div>
-      <div className="fixed top-[30vh] right-5">
+      <div className="fixed top-[30vh] right-5 mobile:max-sm:hidden">
+        <FloatingSideBar />
+      </div>
+      <div className="fixed bottom-0 hidden mobile:max-sm:block">
         <FloatingSideBar />
       </div>
     </main>
