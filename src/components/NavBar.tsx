@@ -3,25 +3,26 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
+import { MdLightMode } from "react-icons/md";
 
-const LinkItems = [
-  {
-    name: "About",
-    path: "",
-  },
-  {
-    name: "Skills",
-    path: "#skills",
-  },
-  {
-    name: "Projects",
-    path: "",
-  },
-  {
-    name: "Contact",
-    path: "",
-  },
-];
+// const LinkItems = [
+//   {
+//     name: "About",
+//     path: "",
+//   },
+//   {
+//     name: "Skills",
+//     path: "#skills",
+//   },
+//   {
+//     name: "Projects",
+//     path: "",
+//   },
+//   {
+//     name: "Contact",
+//     path: "",
+//   },
+// ];
 
 const NavBar = () => {
   const [openMobileNav, setOpenMobileNav] = useState(false);
@@ -31,7 +32,7 @@ const NavBar = () => {
         PORTFOLIO
       </h3>
 
-      <div className="navItems flex gap-3 mobile:max-sm:hidden text-xs">
+      {/* <div className="navItems flex gap-3 mobile:max-sm:hidden text-xs">
         {LinkItems.map((link, i) => (
           <Link
             key={i}
@@ -41,25 +42,11 @@ const NavBar = () => {
             {link.name}
           </Link>
         ))}
-      </div>
-      <div className="mobile hidden mobile:max-sm:flex flex-col">
-        <button
-          onClick={() => setOpenMobileNav((prev) => !prev)}
-          className="hidden mobile:max-sm:block self-end"
-        >
-          {openMobileNav ? <MdClose size={20} /> : <IoMenu size={20} />}
-        </button>
+      </div> */}
 
-        {openMobileNav && (
-          <div className="Navbar_items flex flex-col absolute right-0 gap-4 bg-white  w-[50vw] items-center h-[calc(100vh-37.50px)] top-[7vh] px-10 bottom-[-150%]">
-            {LinkItems.map((link, i) => (
-              <Link key={i} href={link.path}>
-                {link.name}
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
+      <button>
+        <MdLightMode size={20} />
+      </button>
     </div>
   );
 };
