@@ -161,8 +161,11 @@ export default function Home() {
     <main className="min-h-screen scroll-smooth relative">
       <NavBar />
       <div className="pt-[64px] mobile:max-sm:pb-[70px]">
-        <div className="hero-section  w-full flex justify-center items-center gap-20  px-24 mobile:max-sm:px-5 py-10">
-          <div className="bio w-[50%] mobile:max-sm:w-full justify-center mobile:max-sm:items-center mobile:max-sm:text-center  flex flex-col gap-2">
+        <div className="hero-section  w-full flex justify-center items-center gap-20  px-24 bigScreen:px-80 mobile:max-sm:px-5 py-10">
+          <div
+            id="about"
+            className="bio w-[50%] mobile:max-sm:w-full justify-center mobile:max-sm:items-center mobile:max-sm:text-center  flex flex-col gap-2"
+          >
             <h1>Sam Gmarvis Njong</h1>
             <h2 className="text-[30px] font-bold text-themecolor">
               Frontend Web Developer
@@ -206,13 +209,18 @@ export default function Home() {
             />
           </div>
         </div>
-        <div id="skills" className="skills px-24 mobile:max-sm:px-5 mb-5">
-          <h3 className=" text-themecolor">Skills and Technologies</h3>
-          <div className="grid w-full grid-cols-4 gap-4">
+        <div
+          id="skills"
+          className="skills px-24 bigScreen:px-80  py-20 mobile:max-sm:px-5 mb-5 bg-slate-200"
+        >
+          <h3 className=" text-center font-bold text-[40px] text-themecolor ">
+            Skills and Technologies
+          </h3>
+          <div className="grid w-full grid-cols-4 gap-4 py-20">
             {skills.map((skill, i) => (
               <div
                 key={i}
-                className="flex  justify-center items-center shadow-md gap-2 p-4 flex-wrap "
+                className="flex  justify-center items-center shadow-md gap-2 p-4 flex-wrap rounded-md hover:scale-110 duration-300 bg-white "
               >
                 {skill.icon}
                 <p className="text-xs">{skill.name}</p>
@@ -221,9 +229,14 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="projects px-24 mobile:max-sm:px-5">
-          <h3 className=" text-themecolor">Projects</h3>
-          <div className="flex justify-center items-center">
+        <div
+          id="projects"
+          className="projects px-24 py-20 mobile:max-sm:px-5 w-full"
+        >
+          <h3 className="text-center font-bold text-[40px] text-themecolor">
+            My Projects
+          </h3>
+          <div className="flex justify-center items-center self-center py-20 w-full">
             <Projects />
           </div>
         </div>

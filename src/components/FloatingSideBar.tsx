@@ -8,7 +8,7 @@ import Link from "next/link";
 const LinkItems = [
   {
     name: "About",
-    path: "",
+    path: "#about",
     icon: <FaHome />,
   },
   {
@@ -18,12 +18,12 @@ const LinkItems = [
   },
   {
     name: "Projects",
-    path: "",
+    path: "#projects",
     icon: <FaProjectDiagram />,
   },
   {
     name: "Contact",
-    path: "",
+    path: "#contact",
     icon: <MdContactPhone />,
   },
 ];

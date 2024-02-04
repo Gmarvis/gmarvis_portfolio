@@ -15,6 +15,7 @@ const config: Config = {
       },
       screens: {
         mobile: "0px",
+        bigScreen: "1700px",
       },
       colors: {
         themecolor: "#306976",
