@@ -189,14 +189,23 @@ export default function Home() {
               function seamlessly but also resonate with their emotions and
               aspirations.
             </p>
-            <div className="actionBtns flex gap-5">
-              <Link className="bg-themecolor px-4 py-2 text-white" href={""}>
+            <div className="actionBtns flex gap-5 pt-5">
+              <Link
+                className="bg-themecolor px-4 py-2 text-white"
+                href={"#contact"}
+              >
                 Hire Me
               </Link>
-              <button className="text-[12px] flex justify-center items-center gap-2 shadow-md p-2">
-                <BiDownload />
-                Download CV
-              </button>
+              <Link
+                href={"/SamGmarvisCV.pdf"}
+                download={"Sam Gmarvis DevelopersCV.pdf"}
+                target="_blank"
+              >
+                <button className="text-[12px] flex justify-center items-center gap-2 shadow-md text-themecolor hover:bg-slate-400 hover:text-white duration-300 p-2">
+                  <BiDownload />
+                  Download CV
+                </button>
+              </Link>
             </div>
           </div>
           <div className="image w-[50%] mobile:max-sm:hidden justify-end self-end flex  ">
@@ -246,6 +255,14 @@ export default function Home() {
       </div>
       <div className="fixed bottom-0 hidden mobile:max-sm:block">
         <FloatingSideBar />
+      </div>
+      <div
+        id="contact"
+        className="contact px-24  mobile:max-sm:px-5 w-full bg-slate-200"
+      >
+        <h3 className="text-center font-bold text-[40px] text-themecolor">
+          Contact Me
+        </h3>
       </div>
     </main>
   );
