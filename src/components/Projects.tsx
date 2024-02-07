@@ -4,22 +4,24 @@ import { projectData } from "../../data";
 
 function Projects() {
   return (
-    <div className="grid w-full grid-cols-3 self-center mobile:max-sm:grid-cols-1 gap-4 justify-center items-center">
+    <div className="flex gap-10 flex-wrap w-full  mobile:max-sm:px-0 justify-center items-center ">
       {projectData.map((project, i) => (
         <div
           key={i}
-          style={{
-            backgroundImage: `url(${project.image})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            objectFit: "fill",
-          }}
-          className="w-[25vw] h-[25vw] rounded-md border-r border-b border-themecolor"
+          className="w-[300px] mobile:max-sm:w-[95vw]  mt-5  bg-white h-[300px] shadow-md hover:scale-110 duration-300"
         >
-          <div className="bg-white opacity-90 shadow-md w-full h-full rounded justify-center items-center flex flex-col">
-            <h3>{project.name}</h3>
-            <p>{project.short_title}</p>
-            <p className="text-center">{project.description}</p>
+          <div
+            style={{
+              backgroundImage: `url(${project.image})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              objectFit: "fill",
+            }}
+            className="w-full h-[150px]  rounded-md"
+          ></div>
+          <div className=" p-2 flex flex-col gap-2">
+            <h3 className="font-bold">{project.name}</h3>
+            <p className="text-xs text-gray-500">{project.description}</p>
           </div>
         </div>
       ))}
