@@ -18,6 +18,7 @@ import { RiSupabaseFill } from "react-icons/ri";
 import { BiDownload } from "react-icons/bi";
 import FloatingSideBar from "@/components/FloatingSideBar";
 import Projects from "@/components/Projects";
+import Contact from "@/components/Contact";
 export default function Home() {
   const skills = [
     {
@@ -258,11 +259,12 @@ export default function Home() {
       </div>
       <div
         id="contact"
-        className="contact px-24  mobile:max-sm:px-5 w-full bg-slate-200"
+        className="contact px-24 py-20 mobile:max-sm:px-5 w-full bg-slate-200"
       >
         <h3 className="text-center font-bold text-[40px] text-themecolor">
           Contact Me
         </h3>
+        <Contact />
       </div>
     </main>
   );
