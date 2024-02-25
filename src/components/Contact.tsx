@@ -2,18 +2,25 @@ import React from "react";
 
 const Contact = () => {
   return (
-    <div className="flex w-full">
-      <div className="w-[50vw]">
+    <div className="flex w-full justify-between mobile:max-sm:flex-col mobile:max-sm:gap-5">
+      <div className="w-[40vw] mobile:max-sm:w-full mobile:max-sm:text-center">
+        <h3 className=" font-bold text-[40px] pb-5 text-themecolor mobile:max-sm:text-center">
+          Contact Me
+        </h3>
         <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam
-          necessitatibus optio praesentium animi, unde amet ex maiores harum.
-          Omnis facere veritatis aut laboriosam maiores natus ratione ea nam,
-          quidem sint minima? Excepturi id repellat distinctio dicta quos
-          assumenda itaque, aperiam ipsum sapiente? Excepturi nesciunt
-          blanditiis ipsa odio est illo doloremque inventore error ipsum.
+          I am passionate about bringing innovative ideas to life through the
+          power of software development. Whether you are looking for a skilled
+          developer to enhance your existing project or craft a groundbreaking
+          web application from scratch, I am eager to discuss your vision and
+          collaborate on creating something truly remarkable.
+        </p>
+
+        <p>
+          I am always open to new challenges and opportunities, so feel free to
+          reach out with any inquiries.
         </p>
       </div>
-      <form className="w-[40vw] border  border-themecolor flex flex-col gap-2 p-4 h-[40vh] rounded-lg text-slate-600">
+      <form className="w-[40vw] border  border-themecolor flex flex-col gap-2 p-4 h-[40vh] mobile:max-sm:w-full rounded-lg text-slate-600">
         <input
           type="name"
           className="w-full outline-none p-2"

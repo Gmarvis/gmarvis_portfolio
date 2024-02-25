@@ -203,11 +203,8 @@ export default function Home() {
 
       <div
         id="contact"
-        className="contact px-24 py-20 mobile:max-sm:px-5 w-full bg-slate-200"
+        className="contact px-24 py-10 mobile:max-sm:px-5 w-full bg-slate-200"
       >
-        <h3 className="text-center font-bold text-[40px] text-themecolor">
-          Contact Me
-        </h3>
         <Contact />
       </div>
     </main>

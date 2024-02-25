@@ -14,7 +14,7 @@ const HeroSection = () => {
         className="bio w-[50%] mobile:max-sm:w-full justify-center mobile:max-sm:items-center mobile:max-sm:text-center  flex flex-col gap-2"
       >
         <h1>Sam Gmarvis Njong</h1>
-        <h2 className="text-[30px] font-bold text-themecolor">
+        <h2 className="text-[30px] font-bold themecolor bg-gradient-to-r from-themecolor to-orange-600 bg-clip-text text-transparent">
           Frontend Web Developer
         </h2>
         <motion.div
