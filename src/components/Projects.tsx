@@ -1,6 +1,9 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import { projectData } from "../../data";
+import Link from "next/link";
+import { UseInViewOptions } from "framer-motion";
 
 function Projects() {
   return (
@@ -8,7 +11,7 @@ function Projects() {
       {projectData.map((project, i) => (
         <div
           key={i}
-          className="w-[300px] mobile:max-sm:w-[95vw]  mt-5  bg-white h-[300px] shadow-md hover:scale-110 duration-300"
+          className="w-[310px] mobile:max-sm:w-[95vw]  mt-5  bg-white h-[300px] shadow-md hover:scale-110 duration-300"
         >
           <div
             style={{
@@ -20,8 +23,25 @@ function Projects() {
             className="w-full h-[150px]  rounded-md"
           ></div>
           <div className=" p-2 flex flex-col gap-2">
-            <h3 className="font-bold">{project.name}</h3>
+            <Link href={project.link} target="_blank">
+              <h3 className="font-bold text-themecolor underline">
+                {project.name}
+              </h3>
+            </Link>
             <p className="text-xs text-gray-500">{project.description}</p>
+            {/* {project.demo && (
+              <p className="flex flex-col">
+                Demo Account: <span> Email {project.demo.email}</span>
+                <span> Password {project.demo.password}</span>
+              </p>
+            )} */}
+            <div className="flex gap-2">
+              {project.technology.map((tool, i) => (
+                <span key={i} className=" text-xs border px-1 text-gray-500">
+                  {tool}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       ))}
