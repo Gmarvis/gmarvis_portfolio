@@ -14,7 +14,7 @@ const HeroSection = () => {
         className="bio w-[50%] mobile:max-sm:w-full justify-center mobile:max-sm:items-center mobile:max-sm:text-center  flex flex-col gap-2"
       >
         <h1>Sam Gmarvis Njong</h1>
-        <h2 className="text-[30px] font-bold themecolor bg-gradient-to-r from-themecolor to-orange-600 bg-clip-text text-transparent">
+        <h2 className="text-[40px] font-bold themecolor bg-gradient-to-r from-themecolor to-slate-400 bg-clip-text text-transparent">
           Frontend Web Developer
         </h2>
         <motion.div
@@ -28,11 +28,11 @@ const HeroSection = () => {
             alt=""
             width={400}
             height={300}
-            className="rounded-full hidden mobile:max-sm:block z-0"
+            className="rounded-full hidden mobile:max-sm:block z-0 grayscale-[50%] hover:grayscale-[0%] duration-300"
           />
         </motion.div>
 
-        <p className="mobile:max-sm:pt-3">
+        <p className="mobile:max-sm:pt-3 text-gray-700">
           Beyond technical proficiency, I bring a strong sense of empathy and
           user-centricity to my work. I believe that understanding the needs and
           aspirations of users is paramount to creating truly impact digital
@@ -65,7 +65,7 @@ const HeroSection = () => {
           alt=""
           width={400}
           height={300}
-          className="rounded-[5px] border-r-4 border-r-themecolor border-b-4 border-b-themecolor"
+          className=" border-r-4 border-r-themecolor border-b-4 border-b-themecolor grayscale-[50%] hover:grayscale-[0%] rounded-full duration-300"
         />
       </div>
     </div>
