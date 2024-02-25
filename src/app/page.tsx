@@ -1,3 +1,4 @@
+// "use client";
 import NavBar from "@/components/NavBar";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,10 +16,11 @@ import { GrMysql } from "react-icons/gr";
 import { SiMongodb } from "react-icons/si";
 import { SiFirebase } from "react-icons/si";
 import { RiSupabaseFill } from "react-icons/ri";
-import { BiDownload } from "react-icons/bi";
 import FloatingSideBar from "@/components/FloatingSideBar";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
+import { motion } from "framer-motion";
+import HeroSection from "@/components/HeroSection";
 export default function Home() {
   const skills = [
     {
@@ -162,63 +164,7 @@ export default function Home() {
     <main className="min-h-screen scroll-smooth relative">
       <NavBar />
       <div className="pt-[64px] mobile:max-sm:pb-[70px]">
-        <div className="hero-section  w-full flex justify-center items-center gap-20  px-24 bigScreen:px-80 mobile:max-sm:px-5 py-10">
-          <div
-            id="about"
-            className="bio w-[50%] mobile:max-sm:w-full justify-center mobile:max-sm:items-center mobile:max-sm:text-center  flex flex-col gap-2"
-          >
-            <h1>Sam Gmarvis Njong</h1>
-            <h2 className="text-[30px] font-bold text-themecolor">
-              Frontend Web Developer
-            </h2>
-            <div className="border-r-4 border-r-themecolor border-b-4 hidden rounded-[5px] mobile:max-sm:block border-b-themecolor ">
-              <Image
-                src={"/profile_cicle.png"}
-                alt=""
-                width={400}
-                height={300}
-                className="rounded-[5px] hidden mobile:max-sm:block z-0"
-              />
-            </div>
-
-            <p>
-              Beyond technical proficiency, I bring a strong sense of empathy
-              and user-centricity to my work. I believe that understanding the
-              needs and aspirations of users is paramount to creating truly
-              impact digital experiences. By immersing myself in their
-              perspectives, I can design and develop solutions that not only
-              function seamlessly but also resonate with their emotions and
-              aspirations.
-            </p>
-            <div className="actionBtns flex gap-5 pt-5">
-              <Link
-                className="bg-themecolor px-4 py-2 text-white"
-                href={"#contact"}
-              >
-                Hire Me
-              </Link>
-              <Link
-                href={"/SamGmarvisCV.pdf"}
-                download={"Sam Gmarvis DevelopersCV.pdf"}
-                target="_blank"
-              >
-                <button className="text-[12px] flex justify-center items-center gap-2 shadow-md text-themecolor hover:bg-slate-400 hover:text-white duration-300 p-2">
-                  <BiDownload />
-                  Download CV
-                </button>
-              </Link>
-            </div>
-          </div>
-          <div className="image w-[50%] mobile:max-sm:hidden justify-end self-end flex  ">
-            <Image
-              src={"/profile_cicle.png"}
-              alt=""
-              width={400}
-              height={300}
-              className="rounded-[5px] border-r-4 border-r-themecolor border-b-4 border-b-themecolor"
-            />
-          </div>
-        </div>
+        <HeroSection />
         <div
           id="skills"
           className="skills px-24 bigScreen:px-80  py-20 mobile:max-sm:px-5 mb-5 bg-slate-200"
@@ -251,12 +197,10 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="fixed top-[30vh] right-5 mobile:max-sm:hidden">
+      <div className="fixed top-[63vh] left-5 mobile:max-sm:left-1 mobile:max-sm:top-[70vh]">
         <FloatingSideBar />
       </div>
-      <div className="fixed bottom-0 hidden mobile:max-sm:block">
-        <FloatingSideBar />
-      </div>
+
       <div
         id="contact"
         className="contact px-24 py-20 mobile:max-sm:px-5 w-full bg-slate-200"

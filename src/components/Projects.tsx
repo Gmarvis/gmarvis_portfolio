@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import { projectData } from "../../data";
 import Link from "next/link";
+import { UseInViewOptions } from "framer-motion";
 
 function Projects() {
   return (
