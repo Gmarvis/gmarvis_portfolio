@@ -9,9 +9,11 @@ function Projects() {
   return (
     <div className="flex gap-10 flex-wrap w-full  mobile:max-sm:px-0 justify-center items-center ">
       {projectData.map((project, i) => (
-        <div
+        <Link
+          href={project.link}
+          target="_blank"
           key={i}
-          className="w-[310px] mobile:max-sm:w-[95vw]  mt-5  bg-white h-[300px] shadow-md hover:scale-110 duration-300"
+          className="w-[310px] mobile:max-sm:w-[95vw]  mt-5 hover:cursor-pointer bg-white h-[300px] shadow-md hover:scale-110 duration-300"
         >
           <div
             style={{
@@ -43,7 +45,7 @@ function Projects() {
               ))}
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

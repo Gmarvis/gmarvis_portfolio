@@ -3,14 +3,17 @@
 import React, { RefObject, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import MessageBar from "./MessageBar";
+import SpinnerLoader from "./atoms/SpinnerLoader";
 
 const Contact = () => {
   const form: any = useRef();
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const sendEmail = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    setIsLoading(true);
 
     emailjs
       .sendForm("service_k0kw658", "template_3rvzfiq", form.current, {
@@ -26,7 +29,7 @@ const Contact = () => {
           setTimeout(() => {
             setMessage("");
           }, 5000);
-
+          setIsLoading(false);
           console.log(results);
 
           console.log("SUCCESS!");
@@ -40,6 +43,7 @@ const Contact = () => {
             setMessage("");
           }, 5000);
           console.log("FAILED...", error.text);
+          setIsLoading(false);
         }
       );
   };
@@ -66,7 +70,7 @@ const Contact = () => {
       <form
         ref={form}
         onSubmit={sendEmail}
-        className="w-[40vw] border  border-themecolor flex flex-col gap-2 p-4 min-h-[40vh] mobile:max-sm:w-full rounded-lg text-slate-600"
+        className="w-[40vw] border  border-themecolor flex flex-col gap-2 p-4 min-h-[40vh] mobile:max-sm:h-auto mobile:max-sm:w-full rounded-lg text-slate-600"
       >
         <input
           type="name"
@@ -81,12 +85,17 @@ const Contact = () => {
           className="w-full outline-none p-2"
         />
         <textarea
-          className="outline-none h-[100px] p-2 text-sm"
+          className="outline-none h-[100px] mobile:max-sm:h-[150px] p-2 text-sm"
           placeholder="Message..."
           name="message"
           id=""
         ></textarea>
-        <button className="bg-themecolor p-2 text-white ">send message</button>
+        <button
+          className={`bg-themecolor p-2 text-white flex justify-center items-center disabled:bg-slate-800`}
+          disabled={isLoading}
+        >
+          {!isLoading ? "send message " : <SpinnerLoader />}
+        </button>
         {message && <MessageBar status text={message} />}
       </form>
     </div>
@@ -96,5 +105,4 @@ const Contact = () => {
 export default Contact;
 
 //>>>>>>>>>>>>TODO<<<<<<<<<<<
-// #1 Add a loading indicator when sending message
-// #2 Handle form validation
+// #1 Handle form validation
