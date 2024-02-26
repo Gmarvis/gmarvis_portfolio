@@ -7,13 +7,31 @@ import SpinnerLoader from "./atoms/SpinnerLoader";
 
 const Contact = () => {
   const form: any = useRef();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [sendMessage, setSendMessage] = useState("");
+
   const [message, setMessage] = useState("");
-  const [status, setStatus] = useState(true);
+
+  const [status, setStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const sendEmail = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setIsLoading(true);
+
+    if (!name || !email || !sendMessage) {
+      setStatus(false);
+
+      setMessage("please fill the form corectly");
+
+      setTimeout(() => {
+        setMessage("");
+      }, 5000);
+      setIsLoading(false);
+      return;
+    }
 
     emailjs
       .sendForm("service_k0kw658", "template_3rvzfiq", form.current, {
@@ -77,10 +95,12 @@ const Contact = () => {
           name="name"
           className="w-full outline-none p-2"
           placeholder="Name"
+          onChange={(e) => setName(e.target.value)}
         />
         <input
           type="email"
           name="email"
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           className="w-full outline-none p-2"
         />
@@ -88,6 +108,7 @@ const Contact = () => {
           className="outline-none h-[100px] mobile:max-sm:h-[150px] p-2 text-sm"
           placeholder="Message..."
           name="message"
+          onChange={(e) => setSendMessage(e.target.value)}
           id=""
         ></textarea>
         <button
@@ -96,7 +117,7 @@ const Contact = () => {
         >
           {!isLoading ? "send message " : <SpinnerLoader />}
         </button>
-        {message && <MessageBar status text={message} />}
+        {message && <MessageBar status={status} text={message} />}
       </form>
     </div>
   );
