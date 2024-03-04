@@ -1,5 +1,5 @@
-#Sam Gmarvis 
-## Portfolio website
+### Sam Gmarvis portfolio website
+![image](https://github.com/Gmarvis/gmarvis_portfolio/assets/106551910/b8cea7a6-1166-4ff2-84d2-6308e25b07d8)
 
 First, run the development server:
 
