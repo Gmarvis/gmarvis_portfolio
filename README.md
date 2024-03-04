@@ -1,6 +1,15 @@
 ### Sam Gmarvis portfolio website
 ![image](https://github.com/Gmarvis/gmarvis_portfolio/assets/106551910/b8cea7a6-1166-4ff2-84d2-6308e25b07d8)
 
+![image](https://github.com/Gmarvis/gmarvis_portfolio/assets/106551910/76a6156d-3299-445e-a674-d4a03018ff4e)
+
+![image](https://github.com/Gmarvis/gmarvis_portfolio/assets/106551910/4d0f056e-b142-4548-b3a7-09cc2dbee8af)
+
+![image](https://github.com/Gmarvis/gmarvis_portfolio/assets/106551910/2b25a755-27ff-40d8-b8dc-30630213a789)
+
+
+
+
 First, run the development server:
 
 ```bash
