@@ -24,7 +24,7 @@ function Projects() {
             }}
             className="w-full h-[150px]  rounded-md"
           ></div>
-          <div className=" p-2 flex flex-col gap-2">
+          <div className=" p-2 flex flex-col gap-2 justify-between">
             <Link href={project.link} target="_blank">
               <h3 className="font-bold text-themecolor underline">
                 {project.name}
@@ -37,7 +37,7 @@ function Projects() {
                 <span> Password {project.demo.password}</span>
               </p>
             )} */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               {project.technology.map((tool, i) => (
                 <span key={i} className=" text-xs border px-1 text-gray-500">
                   {tool}
