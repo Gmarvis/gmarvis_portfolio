@@ -15,7 +15,7 @@ const HeroSection = () => {
       >
         <h1>Sam Gmarvis Njong</h1>
         <h2 className="text-[40px] font-bold themecolor bg-gradient-to-r from-themecolor to-slate-400 bg-clip-text text-transparent">
-          Frontend Web Developer
+          FullStack Web Developer
         </h2>
         <motion.div
           initial={{ opacity: 0, translateY: -20 }}
