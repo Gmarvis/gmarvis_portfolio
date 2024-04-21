@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 import NavBar from "@/components/NavBar";
 import Image from "next/image";
 import Link from "next/link";
@@ -160,6 +160,23 @@ export default function Home() {
 
   // console.log(skills.length);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.25,
+      },
+    },
+  };
+
+  const gridVariants = {
+    hidden: {
+      opacity: 0,
+    },
+    show: { opacity: 1 },
+  };
+
   return (
     <main className="min-h-screen scroll-smooth relative">
       <NavBar />
@@ -172,17 +189,23 @@ export default function Home() {
           <h3 className=" text-center font-bold text-[40px] text-themecolor ">
             Skills and Technologies
           </h3>
-          <div className="grid w-full grid-cols-4 gap-4 py-20">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="grid w-full grid-cols-4 gap-4 py-20"
+          >
             {skills.map((skill, i) => (
-              <div
+              <motion.div
                 key={i}
+                variants={gridVariants}
                 className="flex  justify-center items-center shadow-md gap-2 p-4 flex-wrap rounded-md hover:scale-110 duration-300 bg-white "
               >
                 {skill.icon}
                 <p className="text-xs">{skill.name}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         <div
