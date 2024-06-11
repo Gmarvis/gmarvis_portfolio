@@ -32,7 +32,7 @@ const NavBar = () => {
 	const currentTheme = theme === "system" ? systemTheme : theme;
 	return (
 		<div className="w-full px-24 bigScreen:px-80  fixed z-40 bg-white dark:bg-slate-800 mobile:max-sm:px-5 shadow-md flex justify-between  items-center py-5">
-			<h3 className="font-bold text-24 text-themecolor text-[18px] rounded-tr-full px-3 pl-4 border-themecolor dark:text-white dark:border-white py-1 border-2">
+			<h3 className="font-bold text-24  text-themecolor text-[18px] rounded-tr-full px-3 pl-4 border-themecolor py-1 border-2">
 				GMARVIS
 			</h3>
 
@@ -52,8 +52,8 @@ const NavBar = () => {
 				onClick={() => (theme == "dark" ? setTheme("light") : setTheme("dark"))}
 				className="dark:text-white  text-slate-800"
 			>
-				<MdLightMode className=" hidden dark:block" size={20} />
-				<MdDarkMode size={20} className="block dark:hidden" />
+				<MdLightMode className=" hidden dark:block" size={28} />
+				<MdDarkMode size={28} className="block dark:hidden" />
 			</button>
 		</div>
 	);

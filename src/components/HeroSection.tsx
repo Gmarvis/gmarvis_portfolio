@@ -8,20 +8,20 @@ import { BiDownload } from "react-icons/bi";
 
 const HeroSection = () => {
 	return (
-		<div className="hero-section dark:bg-slate-800 w-full flex justify-center items-center gap-20  px-24 bigScreen:px-80 mobile:max-sm:px-5 py-10">
+		<div className="hero-section dark:bg-slate-800 w-full flex justify-center items-center gap-20  px-24 bigScreen:px-80 mobile:max-sm:px-5 mt-2 py-10">
 			<div
 				id="about"
-				className="bio w-[50%] mobile:max-sm:w-full justify-center mobile:max-sm:items-center mobile:max-sm:text-center  flex flex-col gap-2"
+				className="bio w-[50%] mobile:max-md:w-full justify-center mobile:max-md:items-center mobile:max-md:text-center  flex flex-col gap-2"
 			>
 				<h1>Sam Gmarvis Njong</h1>
-				<h2 className="animate-typing whitespace-nowrap  text-[40px] font-bold themecolor bg-gradient-to-r from-themecolor to-slate-400 bg-clip-text text-transparent">
-					FullStack Web Developer
+				<h2 className="overflow-hidden w-full  text-[40px] font-bold themecolor bg-gradient-to-r from-themecolor to-slate-400 bg-clip-text text-transparent">
+					FullStack Software Developer
 				</h2>
 				<motion.div
 					initial={{ opacity: 0, translateY: -20 }}
 					animate={{ opacity: 1, translateY: 0 }}
 					transition={{ duration: 0.3 }}
-					className="border-r-4 border-r-themecolor border-b-4 hidden rounded-full mobile:max-sm:block border-b-themecolor "
+					className="border-r-4 border-r-themecolor border-b-4 hidden rounded-full mobile:max-md:block border-b-themecolor "
 				>
 					<Image
 						src={"/profile_cicle.png"}
@@ -52,14 +52,14 @@ const HeroSection = () => {
 						download={"Sam Gmarvis DevelopersCV.pdf"}
 						target="_blank"
 					>
-						<button className="text-[12px] flex justify-center items-center gap-2 shadow-md dark:border dark:border-themecolor rounded-md text-themecolor hover:bg-slate-400 hover:text-white duration-300 p-2">
+						<button className="text-[12px] flex justify-center items-center gap-2 shadow-md dark:border dark:border-themecolor rounded-md text-themecolor hover:bg-themecolor hover:text-white duration-300 p-2">
 							<BiDownload />
 							Download CV
 						</button>
 					</Link>
 				</div>
 			</div>
-			<div className="image w-[50%] mobile:max-sm:hidden justify-end self-end flex  ">
+			<div className="image w-[50%] mobile:max-md:hidden justify-end self-end flex  ">
 				<Image
 					src={"/profile_cicle.png"}
 					alt=""
