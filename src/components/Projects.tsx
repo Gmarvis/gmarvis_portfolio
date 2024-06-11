@@ -17,9 +17,9 @@ function Projects() {
 				>
 					<div
 						style={{
-							// backgroundImage: `url(${project.image})`,
-							backgroundImage: `linear-gradient(to top, rgba(7, 31, 36, 10), rgba(7, 31, 36, 0)),
-							url('${project.image}')`,
+							backgroundImage: `url(${project.image})`,
+							// backgroundImage: `linear-gradient(to top, rgba(7, 31, 36, 10), rgba(7, 31, 36, 0)),
+							// url('${project.image}')`,
 							backgroundSize: "cover",
 							backgroundPosition: "center",
 							objectFit: "fill",
