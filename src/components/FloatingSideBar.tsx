@@ -34,7 +34,7 @@ export default function FloatingSideBar() {
 					key={i}
 					className="flex flex-col justify-center items-center hover:scale-110 duration-300 "
 				>
-					<div className="icon shadow-md p-4 rounded-full dark:bg-slate-900 dark:border-none bg-white text-themecolor text-[18px] border">
+					<div className="icon shadow-md p-4 mobile:max-sm:p-2  rounded-full dark:bg-slate-900 dark:border-none bg-white text-themecolor text-[18px] border">
 						{link.icon}
 					</div>
 				</Link>

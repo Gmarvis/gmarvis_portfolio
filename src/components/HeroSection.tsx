@@ -14,7 +14,7 @@ const HeroSection = () => {
 				className="bio w-[50%] mobile:max-md:w-full justify-center mobile:max-md:items-center mobile:max-md:text-center  flex flex-col gap-2"
 			>
 				<h1>Sam Gmarvis Njong</h1>
-				<h2 className="overflow-hidden w-full  text-[40px] font-bold themecolor bg-gradient-to-r from-themecolor to-slate-400 bg-clip-text text-transparent">
+				<h2 className=" overflow-hidden w-full mobile:max-sm:text-2xl text-[40px] font-bold themecolor bg-gradient-to-r from-themecolor to-slate-400 bg-clip-text text-transparent">
 					FullStack Software Developer
 				</h2>
 				<motion.div

@@ -23,7 +23,7 @@ export default function Home() {
 					<Projects />
 				</div>
 			</div>
-			<div className="fixed top-[63vh] right-5 mobile:max-sm:right-1 mobile:max-sm:top-[70vh]">
+			<div className="fixed top-[63vh] right-5 mobile:max-sm:right-0 mobile:max-sm:top-[60vh]">
 				<FloatingSideBar />
 			</div>
 
