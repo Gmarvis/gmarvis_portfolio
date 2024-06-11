@@ -13,16 +13,18 @@ function Projects() {
 					href={project.link}
 					target="_blank"
 					key={i}
-					className="w-[30%] mobile:max-sm:w-[95vw] dark:bg-slate-800 dark:border dark:border-themecolor  rounded-md mt-5 hover:cursor-pointer bg-white h-[350px] shadow-md hover:scale-110 duration-300"
+					className="w-[30%] mobile:max-sm:w-[95vw] dark:bg-slate-800   rounded-md mt-5 hover:cursor-pointer bg-white h-[350px] shadow-md hover:scale-110 duration-300"
 				>
 					<div
 						style={{
-							backgroundImage: `url(${project.image})`,
+							// backgroundImage: `url(${project.image})`,
+							backgroundImage: `linear-gradient(to top, rgba(7, 31, 36, 10), rgba(7, 31, 36, 0)),
+							url('${project.image}')`,
 							backgroundSize: "cover",
 							backgroundPosition: "center",
 							objectFit: "fill",
 						}}
-						className="w-full h-[200px]  rounded-t-md  "
+						className="w-full h-[200px]  rounded-t-md "
 					></div>
 					<div className=" p-2 flex flex-col gap-2 justify-between">
 						<Link href={project.link} target="_blank">
