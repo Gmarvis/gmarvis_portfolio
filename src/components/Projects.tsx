@@ -13,7 +13,7 @@ function Projects() {
 					href={project.link}
 					target="_blank"
 					key={i}
-					className="w-[30%] mobile:max-sm:w-[95vw] dark:bg-slate-800 dark:border dark:border-themecolor rounded-md mt-5 hover:cursor-pointer bg-white h-[350px] shadow-md hover:scale-110 duration-300"
+					className="w-[30%] mobile:max-sm:w-[95vw] dark:bg-slate-800 dark:border dark:border-themecolor  rounded-md mt-5 hover:cursor-pointer bg-white h-[350px] shadow-md hover:scale-110 duration-300"
 				>
 					<div
 						style={{
@@ -30,13 +30,15 @@ function Projects() {
 								{project.name}
 							</h3>
 						</Link>
-						<p className="text-xs text-gray-500">{project.description}</p>
+						<p className="text-xs text-gray-500 dark:text-slate-400">
+							{project.description}
+						</p>
 
-						<div className="flex gap-2 flex-wrap">
+						<div className="flex gap-2 flex-wrap ">
 							{project.technology.map((tool, i) => (
 								<span
 									key={i}
-									className=" text-xs border py-1 rounded-md text-gray-500 dark:border-themecolor px-2"
+									className=" text-xs border dark:text-slate-400 py-1 rounded-md text-gray-500 dark:border-themecolor px-2"
 								>
 									{tool}
 								</span>
