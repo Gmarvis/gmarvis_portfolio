@@ -169,7 +169,7 @@ const SkillsSection = () => {
 	return (
 		<div
 			id="skills"
-			className="skills  px-24 bigScreen:px-80  py-20 mobile:max-sm:px-5 mb-5 dark:bg-slate-800 bg-slate-200"
+			className="skills h-[80vh]   px-24 bigScreen:px-80  py-20 mobile:max-sm:px-5 mb-5 dark:bg-slate-800 bg-slate-200 justify-center flex flex-col"
 		>
 			<h3 className=" text-center font-bold text-[40px] text-themecolor ">
 				Skills and Technologies

@@ -8,10 +8,12 @@ import { BiDownload } from "react-icons/bi";
 
 const HeroSection = () => {
 	return (
-		<div className="hero-section dark:bg-slate-800 w-full flex justify-center items-center gap-20  px-24 bigScreen:px-80 mobile:max-sm:px-5 mt-2 py-10">
+		<div
+		id="about"
+		className="hero-section sm:h-[80vh] shadow-md  dark:bg-slate-900 w-full flex justify-center items-center gap-20  px-24 bigScreen:px-80 mobile:max-sm:px-5 mt-2 py-10">
 			<div
-				id="about"
-				className="bio w-[50%] mobile:max-md:w-full justify-center mobile:max-md:items-center mobile:max-md:text-center  flex flex-col gap-2"
+				
+				className="bio  w-[50%] mobile:max-md:w-full justify-center mobile:max-md:items-center mobile:max-md:text-center  flex flex-col gap-2"
 			>
 				<h1>Sam Gmarvis Njong</h1>
 				<h2 className=" overflow-hidden w-full mobile:max-sm:text-2xl text-[40px] font-bold themecolor bg-gradient-to-r from-themecolor to-slate-400 bg-clip-text text-transparent">
@@ -49,7 +51,6 @@ const HeroSection = () => {
 					</Link>
 					<Link
 						href={"/SamGmarvisCV.pdf"}
-						download={"Sam Gmarvis DevelopersCV.pdf"}
 						target="_blank"
 					>
 						<button className="text-[12px] flex justify-center items-center gap-2 shadow-md dark:border dark:border-themecolor rounded-md text-themecolor hover:bg-themecolor hover:text-white duration-300 p-2">
@@ -59,7 +60,9 @@ const HeroSection = () => {
 					</Link>
 				</div>
 			</div>
-			<div className="image w-[50%] mobile:max-md:hidden justify-end self-end flex  ">
+			<div className="image w-[50%] mobile:max-md:hidden justify-center items-center self-end flex flex-col   h-full">
+			<div className="image w-[100%] mobile:max-md:hidden justify-end self-end flex  ">
+
 				<Image
 					src={"/profile_cicle.png"}
 					alt=""
@@ -67,6 +70,7 @@ const HeroSection = () => {
 					height={300}
 					className=" border-r-4 border-r-themecolor border-b-4 border-b-themecolor  rounded-full duration-300"
 				/>
+				</div>
 			</div>
 		</div>
 	);

@@ -67,7 +67,9 @@ const Contact = () => {
 	};
 
 	return (
-		<div className="flex dark:bg-slate-800 gap-10 justify-betweenitems-center mobile:max-sm:flex-col mobile:max-sm:gap-5 px-24 bigScreen:px-80 py-20 mobile:max-sm:px-5 w-full bg-slate-200">
+		<div
+		id="contact"
+		className="flex py-40 sm:max-sm:h-[80vh] dark:bg-slate-800 gap-10 justify-betweenitems-center mobile:max-sm:flex-col mobile:max-sm:gap-5 px-24 bigScreen:px-80 mobile:max-sm:px-5 w-full bg-slate-200">
 			<div className=" max-w-lg w-full mobile:max-sm:w-full mobile:max-sm:text-center">
 				<h3 className=" font-bold text-[40px] pb-5 text-themecolor mobile:max-sm:text-center">
 					Contact Me

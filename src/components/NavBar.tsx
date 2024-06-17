@@ -32,9 +32,11 @@ const NavBar = () => {
 	const currentTheme = theme === "system" ? systemTheme : theme;
 	return (
 		<div className="w-full px-24 bigScreen:px-80  fixed z-40 bg-white dark:bg-slate-800 mobile:max-sm:px-5 shadow-md flex justify-between  items-center py-5">
+			<Link href="#about">
 			<h3 className="font-bold text-24  text-themecolor text-[18px] rounded-tr-full px-3 pl-4 border-themecolor py-1 border-2">
 				GMARVIS
 			</h3>
+			</Link>
 
 			<div className="navItems flex gap-3 mobile:max-sm:hidden text-sm font-semibold">
 				{LinkItems.map((link, i) => (
