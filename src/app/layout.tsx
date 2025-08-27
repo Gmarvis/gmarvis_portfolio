@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className="scroll-smooth">
-			<ThemeProvider attribute="class">
+			<ThemeProvider>
 				<body className={inter.className}>{children}</body>
 			</ThemeProvider>
 		</html>

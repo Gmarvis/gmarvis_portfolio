@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Linkedin, MessageCircle } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function ProfilePage() {
   return (
@@ -14,10 +15,12 @@ export default function ProfilePage() {
 
             {/* Profile Picture Placeholder */}
             <div className="mx-auto w-32 h-32 rounded-2xl overflow-hidden border-2 border-border">
-              <img
+              <Image
                 src="https://media.licdn.com/dms/image/v2/D4E03AQFTvxl-vglYDQ/profile-displayphoto-crop_800_800/B4EZh5pAgkGUAI-/0/1754387452276?e=1759363200&v=beta&t=vT0OyZc3bGs1tSjDNMnEa4Vc8hPUwhpjTf3qtpKCilE"
                 alt="Sam Gmarvis Profile Picture"
                 className="w-full h-full object-cover"
+                width={100}
+                height={100}
               />
             </div>
           </div>
