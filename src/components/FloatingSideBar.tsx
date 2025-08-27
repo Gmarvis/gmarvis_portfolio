@@ -5,8 +5,14 @@ import { SlSocialTwitter } from "react-icons/sl";
 import { TbBrandGithub } from "react-icons/tb";
 import { MdContactPhone } from "react-icons/md";
 import Link from "next/link";
+import {  QrCode } from "lucide-react";
 
 const LinkItems = [
+	{
+		name:"QR Code",
+		path: "/connect",
+		icon: <QrCode size={24} />
+	},
 	{
 		name: "linkedin",
 		path: "https://www.linkedin.com/in/samgmarvis/",
