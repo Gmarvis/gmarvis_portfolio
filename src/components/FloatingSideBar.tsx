@@ -29,7 +29,7 @@ const LinkItems = [
 		icon: <TbBrandGithub size={24} />,
 	},
 ];
-
+// floating side bar
 export default function FloatingSideBar() {
 	return (
 		<div className="flex flex-col  p-6  w-[6rem]   gap-2 rounded-full justify-center items-center">
