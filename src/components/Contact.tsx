@@ -1,131 +1,183 @@
 "use client";
 
-import React, { RefObject, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import MessageBar from "./MessageBar";
+import { Send, Mail, User, MessageSquare } from "lucide-react";
 import SpinnerLoader from "./atoms/SpinnerLoader";
 
 const Contact = () => {
-	const form: any = useRef();
+  const form = useRef<HTMLFormElement>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
 
-	const [name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [sendMessage, setSendMessage] = useState("");
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-	const [message, setMessage] = useState("");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus({
+        type: "error",
+        message: "Please fill in all fields correctly",
+      });
+      setTimeout(() => setStatus({ type: null, message: "" }), 5000);
+      return;
+    }
 
-	const [status, setStatus] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
+    setIsLoading(true);
 
-	const sendEmail = (e: { preventDefault: () => void }) => {
-		e.preventDefault();
-		setIsLoading(true);
+    try {
+      await emailjs.sendForm(
+        "service_k0kw658",
+        "template_3rvzfiq",
+        form.current!,
+        { publicKey: "vq3hgDoUtK5_tEs1Z" }
+      );
 
-		if (!name || !email || !sendMessage) {
-			setStatus(false);
+      setStatus({
+        type: "success",
+        message: "Thank you for reaching out! I'll get back to you as soon as possible.",
+      });
+      
+      setFormData({ name: "", email: "", message: "" });
+      form.current?.reset();
+    } catch (error) {
+      setStatus({
+        type: "error",
+        message: "Sorry, an error occurred while sending your message. Please try again!",
+      });
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => setStatus({ type: null, message: "" }), 5000);
+    }
+  };
 
-			setMessage("please fill the form corectly");
+  return (
+    <section id="contact" className="py-20">
+      <div className="max-w-4xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-4 fade-in-up">
+            Let&apos;s Work Together
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto fade-in-up-2">
+            I&apos;m passionate about bringing innovative ideas to life through software development. 
+            Let&apos;s discuss your vision and create something remarkable.
+          </p>
+        </div>
 
-			setTimeout(() => {
-				setMessage("");
-			}, 5000);
-			setIsLoading(false);
-			return;
-		}
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Contact Info */}
+          <div className="space-y-6 fade-in-up-3">
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold">Get In Touch</h3>
+              <p className="text-muted-foreground">
+                Whether you&apos;re looking to enhance an existing project or build something 
+                from scratch, I&apos;m always open to new challenges and opportunities.
+              </p>
+            </div>
 
-		emailjs
-			.sendForm("service_k0kw658", "template_3rvzfiq", form.current, {
-				publicKey: "vq3hgDoUtK5_tEs1Z",
-			})
-			.then(
-				(results) => {
-					setMessage(
-						" Thank you for reaching out i will get back to you as soon as possible"
-					);
-					setStatus(true);
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 border border-border rounded-lg">
+                  <Mail className="h-4 w-4 text-muted-foreground" />
+                </div>
+                <span className="text-muted-foreground">sam.gmarvis@gmail.com</span>
+              </div>
+            </div>
+          </div>
 
-					setTimeout(() => {
-						setMessage("");
-					}, 5000);
-					setIsLoading(false);
-					console.log(results);
+          {/* Contact Form */}
+          <div className="fade-in-up-4">
+            <form ref={form} onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-4">
+                <div className="relative">
+                  <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full pl-10 pr-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-colors"
+                    required
+                  />
+                </div>
 
-					console.log("SUCCESS!");
-				},
-				(error) => {
-					setMessage(
-						"Sorry and error occured while sending message please try again!"
-					);
-					setStatus(false);
-					setTimeout(() => {
-						setMessage("");
-					}, 5000);
-					console.log("FAILED...", error.text);
-					setIsLoading(false);
-				}
-			);
-	};
+                <div className="relative">
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="your.email@example.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full pl-10 pr-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-colors"
+                    required
+                  />
+                </div>
 
-	return (
-		<div
-		id="contact"
-		className="flex py-40 sm:max-sm:h-[80vh] dark:bg-slate-800 gap-10 justify-betweenitems-center mobile:max-sm:flex-col mobile:max-sm:gap-5 px-24 bigScreen:px-80 mobile:max-sm:px-5 w-full bg-slate-200">
-			<div className=" max-w-lg w-full mobile:max-sm:w-full mobile:max-sm:text-center">
-				<h3 className=" font-bold text-[40px] pb-5 text-themecolor mobile:max-sm:text-center">
-					Contact Me
-				</h3>
-				<p className="text-gray-700  text-sm dark:text-slate-400">
-					I am passionate about bringing innovative ideas to life through the
-					power of software development. Whether you are looking for a skilled
-					developer to enhance your existing project or craft a groundbreaking
-					web application from scratch, I am eager to discuss your vision and
-					collaborate on creating something truly remarkable.
-				</p>
+                <div className="relative">
+                  <MessageSquare className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <textarea
+                    name="message"
+                    placeholder="Tell me about your project..."
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={5}
+                    className="w-full pl-10 pr-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-colors resize-none"
+                    required
+                  />
+                </div>
+              </div>
 
-				<p className="text-gray-700 text-sm mt-3 dark:text-slate-400">
-					I am always open to new challenges and opportunities, so feel free to
-					reach out with any inquiries.
-				</p>
-			</div>
-			<form
-				ref={form}
-				onSubmit={sendEmail}
-				className="w-[40vw] border  border-themecolor flex flex-col gap-2 p-4 min-h-[40vh] mobile:max-sm:h-auto mobile:max-sm:w-full rounded-lg text-slate-600"
-			>
-				<input
-					type="name"
-					name="name"
-					className="w-full outline-none p-2 rounded-md dark:bg-slate-700 dark:text-slate-200"
-					placeholder="Name"
-					onChange={(e) => setName(e.target.value)}
-				/>
-				<input
-					type="email"
-					name="email"
-					onChange={(e) => setEmail(e.target.value)}
-					placeholder="Email"
-					className="w-full outline-none p-2 rounded-md dark:bg-slate-700 dark:text-slate-200"
-				/>
-				<textarea
-					className="outline-none h-[100px] flex-grow mobile:max-sm:h-[150px] p-2 text-sm rounded-md dark:bg-slate-700 dark:text-slate-200"
-					placeholder="Message..."
-					name="message"
-					onChange={(e) => setSendMessage(e.target.value)}
-					id=""
-				></textarea>
-				<button
-					className={`bg-themecolor p-2 text-white flex justify-center items-center disabled:bg-slate-800 rounded-md`}
-					disabled={isLoading}
-				>
-					{!isLoading ? "send message " : <SpinnerLoader />}
-				</button>
-				{message && <MessageBar status={status} text={message} />}
-			</form>
-		</div>
-	);
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full bg-foreground text-background py-3 rounded-lg font-medium hover:bg-foreground/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              >
+                {isLoading ? (
+                  <SpinnerLoader />
+                ) : (
+                  <>
+                    <Send className="h-4 w-4" />
+                    <span>Send Message</span>
+                  </>
+                )}
+              </button>
+
+              {/* Status Message */}
+              {status.message && (
+                <div
+                  className={`p-4 rounded-lg text-sm ${
+                    status.type === "success"
+                      ? "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400"
+                      : "bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400"
+                  }`}
+                >
+                  {status.message}
+                </div>
+              )}
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Contact;
-
-//>>>>>>>>>>>>TODO<<<<<<<<<<<
-// #1 Handle form validation

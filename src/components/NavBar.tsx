@@ -1,64 +1,153 @@
 "use client";
+
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import React, { useState } from "react";
-import { IoMenu } from "react-icons/io5";
-import { MdClose } from "react-icons/md";
-import { MdLightMode } from "react-icons/md";
-import { MdDarkMode } from "react-icons/md";
+import React, { useState, useEffect, useCallback } from "react";
+import { Moon, Sun, Menu, X } from "lucide-react";
 
-const LinkItems = [
-	{
-		name: "About",
-		path: "#about",
-	},
-	{
-		name: "Skills",
-		path: "#skills",
-	},
-	{
-		name: "Projects",
-		path: "#projects",
-	},
-	{
-		name: "Contact",
-		path: "#contact",
-	},
+const navigation = [
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Contact", href: "#contact" },
 ];
 
 const NavBar = () => {
-	const [openMobileNav, setOpenMobileNav] = useState(false);
-	const { systemTheme, theme, setTheme } = useTheme();
-	const currentTheme = theme === "system" ? systemTheme : theme;
-	return (
-		<div className="w-full px-24 bigScreen:px-80  fixed z-40 bg-white dark:bg-slate-800 mobile:max-sm:px-5 shadow-md flex justify-between  items-center py-5">
-			<Link href="#about">
-			<h3 className="font-bold text-24  text-themecolor text-[18px] rounded-tr-full px-3 pl-4 border-themecolor py-1 border-2">
-				GMARVIS
-			</h3>
-			</Link>
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
-			<div className="navItems flex gap-3 mobile:max-sm:hidden text-sm font-semibold">
-				{LinkItems.map((link, i) => (
-					<Link
-						key={i}
-						href={link.path}
-						className="hover:text-themecolor delay-300 active:border-b-themecolor"
-					>
-						{link.name}
-					</Link>
-				))}
-			</div>
+  const toggleTheme = useCallback(() => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  }, [theme, setTheme]);
 
-			<button
-				onClick={() => (theme == "dark" ? setTheme("light") : setTheme("dark"))}
-				className="dark:text-white  text-slate-800"
-			>
-				<MdLightMode className=" hidden dark:block" size={28} />
-				<MdDarkMode size={28} className="block dark:hidden" />
-			</button>
-		</div>
-	);
+  useEffect(() => {
+    setMounted(true);
+    
+    // Add keyboard shortcut for theme toggle (Ctrl/Cmd + Shift + T)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'T') {
+        e.preventDefault();
+        toggleTheme();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [toggleTheme]);
+
+  // Use resolvedTheme to get the actual theme being used
+  const isDark = mounted ? resolvedTheme === "dark" : false;
+
+  if (!mounted) {
+    return (
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-sm bg-background/90 border-b border-border">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <Link 
+              href="#about" 
+              className="text-xl font-bold tracking-tight text-foreground hover:text-muted-foreground transition-colors"
+            >
+              SG
+            </Link>
+            <div className="hidden md:flex items-center space-x-8">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </nav>
+    );
+  }
+
+  return (
+    <nav className="fixed top-0 w-full z-50 backdrop-blur-sm bg-background/90 border-b border-border">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link 
+            href="#about" 
+            className="text-xl font-bold tracking-tight text-foreground hover:text-muted-foreground transition-colors"
+          >
+            SG
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* Theme Toggle & Mobile Menu */}
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={toggleTheme}
+              className="relative p-2 rounded-md border border-border hover:border-foreground transition-all duration-200 group"
+              aria-label="Toggle theme (Ctrl+Shift+T)"
+              title="Toggle theme (Ctrl+Shift+T)"
+            >
+              {mounted ? (
+                isDark ? (
+                  <Sun className="h-4 w-4 group-hover:rotate-180 transition-transform duration-300" />
+                ) : (
+                  <Moon className="h-4 w-4 group-hover:rotate-12 transition-transform duration-300" />
+                )
+              ) : (
+                <div className="h-4 w-4" />
+              )}
+              {/* Tooltip */}
+              <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-foreground text-background text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+                {isDark ? 'Light mode' : 'Dark mode'}
+              </span>
+            </button>
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 rounded-md border border-border hover:border-foreground transition-all duration-200"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <X className="h-4 w-4" />
+              ) : (
+                <Menu className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden py-4 space-y-2 border-t border-border">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-l-2 hover:border-foreground transition-all duration-200"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </nav>
+  );
 };
 
 export default NavBar;

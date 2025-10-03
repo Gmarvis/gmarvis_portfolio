@@ -1,50 +1,71 @@
 "use client";
-import React from "react";
-import { CiLinkedin } from "react-icons/ci";
-import { SlSocialTwitter } from "react-icons/sl";
-import { TbBrandGithub } from "react-icons/tb";
-import { MdContactPhone } from "react-icons/md";
-import Link from "next/link";
-import {  QrCode } from "lucide-react";
 
-const LinkItems = [
-	{
-		name:"QR Code",
-		path: "/connect",
-		icon: <QrCode size={24} />
-	},
-	{
-		name: "linkedin",
-		path: "https://www.linkedin.com/in/samgmarvis/",
-		icon: <CiLinkedin size={24} />,
-	},
-	{
-		name: "twitter",
-		path: "https://twitter.com/sam_gmarvis",
-		icon: <SlSocialTwitter size={24} />,
-	},
-	{
-		name: "Gidhub",
-		path: "https://github.com/gmarvis",
-		icon: <TbBrandGithub size={24} />,
-	},
+import React from "react";
+import { Linkedin, Twitter, Github, QrCode } from "lucide-react";
+import Link from "next/link";
+
+const socialLinks = [
+  {
+    name: "QR Code",
+    href: "/connect",
+    icon: QrCode,
+    color: "hover:text-blue-500",
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/samgmarvis/",
+    icon: Linkedin,
+    color: "hover:text-blue-600",
+  },
+  {
+    name: "Twitter",
+    href: "https://twitter.com/sam_gmarvis",
+    icon: Twitter,
+    color: "hover:text-blue-400",
+  },
+  {
+    name: "GitHub",
+    href: "https://github.com/gmarvis",
+    icon: Github,
+    color: "hover:text-gray-700 dark:hover:text-gray-300",
+  },
 ];
-// floating side bar
-export default function FloatingSideBar() {
-	return (
-		<div className="flex flex-col  p-6  w-[6rem]   gap-2 rounded-full justify-center items-center">
-			{LinkItems.map((link, i) => (
-				<Link
-					href={link.path}
-					target="_blank"
-					key={i}
-					className="flex flex-col justify-center items-center hover:scale-110 duration-300 "
-				>
-					<div className="icon shadow-md p-4 mobile:max-sm:p-2  rounded-full dark:bg-slate-900 dark:border-none bg-white text-themecolor text-[18px] border">
-						{link.icon}
-					</div>
-				</Link>
-			))}
-		</div>
-	);
-}
+
+const FloatingSideBar = () => {
+  return (
+    <div className="flex flex-col space-y-3">
+      {socialLinks.map((link) => {
+        const Icon = link.icon;
+        return (
+          <Link
+            key={link.name}
+            href={link.href}
+            target={link.href.startsWith("http") ? "_blank" : undefined}
+            rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+            className={`
+              group relative p-3 rounded-xl bg-card border border-border 
+              hover:shadow-lg transition-all duration-300 hover:-translate-y-1
+              ${link.color}
+            `}
+            aria-label={link.name}
+          >
+            <Icon className="h-5 w-5 text-muted-foreground group-hover:scale-110 transition-transform duration-300" />
+            
+            {/* Tooltip */}
+            <span className="
+              absolute right-full mr-3 top-1/2 -translate-y-1/2 
+              px-2 py-1 bg-foreground text-background text-xs rounded-md
+              opacity-0 group-hover:opacity-100 transition-opacity duration-300
+              pointer-events-none whitespace-nowrap
+              hidden lg:block
+            ">
+              {link.name}
+            </span>
+          </Link>
+        );
+      })}
+    </div>
+  );
+};
+
+export default FloatingSideBar;

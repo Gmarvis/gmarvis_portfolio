@@ -1,68 +1,105 @@
 "use client";
+
 import React from "react";
 import Image from "next/image";
-import { projectData } from "../../data";
 import Link from "next/link";
-import { UseInViewOptions } from "framer-motion";
+import { ExternalLink, Github } from "lucide-react";
+import { projectData } from "../../data";
 
-function Projects() {
-    return (
-        <div
-            id="projects"
-            className=" dark:bg-slate-900 py-20 sm:max-sm:h-[80vh]"
-        >
-            <h3 className="text-center pt-20 font-bold text-[40px] text-themecolor ">
-                My Projects
-            </h3>
-
-            <div className="flex gap-10 px-24 bigScreen:px-80 flex-wrap w-full mobile:max-sm:items-center mobile:max-sm:flex-col mobile:max-sm:px-0 justify-center items-center  py-20">
-                {projectData.map((project, i) => (
-                    <Link
-                        href={project.link}
-                        target="_blank"
-                        key={i}
-                        className="w-[30%] mobile:max-sm:w-[90vw] relative mobile:max-sm:h-auto dark:bg-slate-800   rounded-md mt-5 hover:cursor-pointer bg-white h-[380px] shadow-md hover:scale-105 duration-300"
-                    >
-                        <div
-                            style={{
-                                backgroundImage: `url(${project.image})`,
-                                // backgroundImage: `linear-gradient(to top, rgba(7, 31, 36, 10), rgba(7, 31, 36, 0)),
-                                // url('${project.image}')`,
-                                backgroundSize: "cover",
-                                backgroundPosition: "center",
-                                objectFit: "fill",
-                            }}
-                            className="flex rounded-t-md "
-                        >
-                            <div className="w-full h-[200px]  rounded-t-md dark:bg-slate-900/20 duration-300"></div>
-                        </div>
-
-                        <div className=" p-2 flex flex-col gap-2 justify-between">
-                            <Link href={project.link} target="_blank">
-                                <h3 className="font-bold text-themecolor underline">
-                                    {project.name}
-                                </h3>
-                            </Link>
-                            <p className="text-xs text-gray-500 dark:text-slate-400 flex flex-col flex-grow">
-                                {project.description}
-                            </p>
-
-                            <div className="flex gap-2 flex-wrap absolute bottom-4">
-                                {project.technology.map((tool, i) => (
-                                    <span
-                                        key={i}
-                                        className=" text-xs border dark:text-slate-400 py-1 rounded-md text-gray-500 dark:border-themecolor px-2"
-                                    >
-                                        {tool}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    </Link>
-                ))}
-            </div>
+const Projects = () => {
+  return (
+    <section id="projects" className="py-20">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-4 fade-in-up">
+            Featured Projects
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto fade-in-up-2">
+            A showcase of my recent work in full-stack development
+          </p>
         </div>
-    );
-}
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {projectData.map((project, index) => (
+            <div
+              key={project.name}
+              className="group bg-card rounded-2xl border border-border overflow-hidden hover:shadow-xl transition-all duration-300 fade-in-up"
+              style={{ animationDelay: `${index * 0.2}s` }}
+            >
+              {/* Project Image */}
+              <div className="relative h-48 overflow-hidden">
+                <Image
+                  src={project.image}
+                  alt={project.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              </div>
+
+              {/* Project Content */}
+              <div className="p-6 space-y-4">
+                <div className="flex items-start justify-between">
+                  <h3 className="text-xl font-bold text-foreground group-hover:text-muted-foreground transition-colors">
+                    {project.name}
+                  </h3>
+                  <div className="flex items-center space-x-2">
+                    <Link
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg hover:border hover:border-border transition-colors"
+                      aria-label={`View ${project.name} live`}
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </Link>
+                  </div>
+                </div>
+
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {project.description}
+                </p>
+
+                {/* Technologies */}
+                <div className="flex flex-wrap gap-2">
+                  {project.technology.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1 border border-border text-muted-foreground text-xs rounded-full"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Demo Credentials (if available) */}
+                {project.demo && (
+                  <div className="p-3 border border-border rounded-lg text-xs">
+                    <p className="font-medium mb-1">Demo Credentials:</p>
+                    <p>Email: {project.demo.email}</p>
+                    <p>Password: {project.demo.password}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA for more projects */}
+        <div className="text-center mt-12 fade-in-up-5">
+          <Link
+            href="https://github.com/gmarvis"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-6 py-3 border border-border rounded-lg font-medium hover:border-foreground transition-colors group"
+          >
+            <Github className="mr-2 h-4 w-4 group-hover:rotate-12 transition-transform" />
+            View More on GitHub
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default Projects;

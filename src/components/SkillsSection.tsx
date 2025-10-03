@@ -1,198 +1,103 @@
+"use client";
+
 import React from "react";
-// React Icons
-import { TiHtml5 } from "react-icons/ti";
-import { IoLogoJavascript } from "react-icons/io5";
-import { SiTypescript } from "react-icons/si";
-import { FaReact } from "react-icons/fa";
-import { TbBrandNextjs } from "react-icons/tb";
-import { DiNodejs } from "react-icons/di";
-import { SiNestjs } from "react-icons/si";
-import { SiExpress } from "react-icons/si";
-import { GrMysql } from "react-icons/gr";
-import { SiMongodb } from "react-icons/si";
-import { SiFirebase } from "react-icons/si";
-import { RiSupabaseFill } from "react-icons/ri";
-import { motion } from "framer-motion";
+
+const frontendSkills = [
+  "HTML/CSS",
+  "JavaScript", 
+  "TypeScript",
+  "React.js",
+  "Next.js",
+  "Tailwind CSS"
+];
+
+const backendSkills = [
+  "Node.js",
+  "NestJS", 
+  "Express",
+  "REST APIs",
+  "GraphQL"
+];
+
+const databaseSkills = [
+  "MySQL",
+  "MongoDB", 
+  "PostgreSQL",
+  "Firebase",
+  "Supabase"
+];
+
+const toolsSkills = [
+  "Git",
+  "Docker", 
+  "AWS",
+  "Vercel",
+  "Socket.io",
+  "Redis"
+];
 
 const SkillsSection = () => {
-	const containerVariants = {
-		hidden: { opacity: 0 },
-		show: {
-			opacity: 1,
-			transition: {
-				staggerChildren: 0.25,
-			},
-		},
-	};
+  const skillCategories = [
+    { title: "Frontend", skills: frontendSkills, color: "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800" },
+    { title: "Backend", skills: backendSkills, color: "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800" },
+    { title: "Database", skills: databaseSkills, color: "bg-purple-50 dark:bg-purple-950/20 border-purple-200 dark:border-purple-800" },
+    { title: "Tools & DevOps", skills: toolsSkills, color: "bg-orange-50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-800" }
+  ];
 
-	const gridVariants = {
-		hidden: {
-			opacity: 0,
-		},
-		show: { opacity: 1 },
-	};
-	const skills = [
-		{
-			name: "HTML/CSS",
-			icon: (
-				<TiHtml5
-					size={30}
-					style={{
-						color: "#e44d26",
-					}}
-				/>
-			),
-		},
-		{
-			name: "JavaScript",
-			icon: (
-				<IoLogoJavascript
-					size={30}
-					style={{
-						color: "#efd81d",
-					}}
-				/>
-			),
-		},
-		{
-			name: "typeScript",
-			icon: (
-				<SiTypescript
-					size={30}
-					style={{
-						color: "#2f74c0",
-					}}
-				/>
-			),
-		},
-		{
-			name: "React.JS",
-			icon: (
-				<FaReact
-					size={30}
-					style={{
-						color: "#66dbfb",
-					}}
-				/>
-			),
-		},
-		{
-			name: "Next.JS",
-			icon: (
-				<TbBrandNextjs
-					size={30}
-					style={{
-						color: "#000",
-					}}
-				/>
-			),
-		},
-		{
-			name: "Node.JS",
-			icon: (
-				<DiNodejs
-					size={30}
-					style={{
-						color: "#86cf33",
-					}}
-				/>
-			),
-		},
-		{
-			name: "Nest.JS",
-			icon: (
-				<SiNestjs
-					size={30}
-					style={{
-						color: "#e12a54",
-					}}
-				/>
-			),
-		},
-		{
-			name: "Express.JS",
-			icon: (
-				<SiExpress
-					size={30}
-					style={{
-						color: "#f1c617",
-					}}
-				/>
-			),
-		},
-		{
-			name: "MySQL",
-			icon: (
-				<GrMysql
-					size={30}
-					style={{
-						color: "#08668f",
-					}}
-				/>
-			),
-		},
+  return (
+    <section id="skills" className="py-20">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-4 fade-in-up">
+            Skills & Technologies
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto fade-in-up-2">
+            A comprehensive toolkit for building modern, scalable web applications
+          </p>
+        </div>
 
-		{
-			name: "MongoDB",
-			icon: (
-				<SiMongodb
-					size={30}
-					style={{
-						color: "#4b9f4b",
-					}}
-				/>
-			),
-		},
-		{
-			name: "Firebase",
-			icon: (
-				<SiFirebase
-					size={30}
-					style={{
-						color: "#f58613",
-					}}
-				/>
-			),
-		},
-		{
-			name: "SupaBase",
-			icon: (
-				<RiSupabaseFill
-					size={30}
-					style={{
-						color: "#2e9969",
-					}}
-				/>
-			),
-		},
-	];
-	return (
-		<div
-			id="skills"
-			className="skills h-[80vh]   px-24 bigScreen:px-80  py-20 mobile:max-sm:px-5 mb-5 dark:bg-slate-800 bg-slate-200 justify-center flex flex-col"
-		>
-			<h3 className=" text-center font-bold text-[40px] text-themecolor ">
-				Skills and Technologies
-			</h3>
-			<motion.div
-				variants={containerVariants}
-				initial="hidden"
-				animate="show"
-				className="grid w-full grid-cols-4 gap-4 py-20"
-			>
-				{skills.map((skill, i) => (
-					<motion.div
-						key={i}
-						variants={gridVariants}
-						className="flex  justify-center items-center shadow-md gap-2 p-4 flex-wrap rounded-md hover:scale-105 duration-300 dark:bg-transparent dark:border dark:border-themecolor bg-white "
-					>
-						{skill.icon}
-						<p className="text-xs">{skill.name}</p>
-					</motion.div>
-				))}
-			</motion.div>
-		</div>
-	);
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {skillCategories.map((category, categoryIndex) => (
+            <div
+              key={category.title}
+              className="fade-in-up"
+              style={{ animationDelay: `${categoryIndex * 0.2}s` }}
+            >
+              <div className={`p-6 rounded-2xl border ${category.color} backdrop-blur-sm`}>
+                <h3 className="text-xl font-semibold mb-4 text-foreground">
+                  {category.title}
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {category.skills.map((skill, skillIndex) => (
+                    <div
+                      key={skill}
+                      className="group p-3 bg-background/60 hover:bg-background rounded-lg border border-border/50 hover:border-border transition-all duration-300 hover:shadow-sm"
+                      style={{ animationDelay: `${categoryIndex * 0.2 + skillIndex * 0.1}s` }}
+                    >
+                      <span className="text-sm font-medium text-foreground group-hover:text-muted-foreground transition-colors">
+                        {skill}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Summary Statement */}
+        <div className="mt-16 text-center fade-in-up-5">
+          <div className="max-w-3xl mx-auto p-6 bg-card border border-border rounded-2xl">
+            <p className="text-muted-foreground">
+              With expertise spanning the full development stack, I create seamless experiences 
+              from responsive frontends to robust backend systems, always focusing on clean code 
+              and optimal performance.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default SkillsSection;
