@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import { Send, Mail, User, MessageSquare } from "lucide-react";
+import { Send, Mail, User, MessageSquare, Github, Linkedin, Twitter } from "lucide-react";
 import SpinnerLoader from "./atoms/SpinnerLoader";
 
 const Contact = () => {
@@ -17,6 +17,24 @@ const Contact = () => {
     type: "success" | "error" | null;
     message: string;
   }>({ type: null, message: "" });
+
+  const socialLinks = [
+    {
+      name: "GitHub",
+      url: "https://github.com/Gmarvis",
+      icon: Github,
+    },
+    {
+      name: "LinkedIn",
+      url: "https://linkedin.com/in/samgmarvis",
+      icon: Linkedin,
+    },
+    {
+      name: "Twitter",
+      url: "https://twitter.com/sam_gmarvis",
+      icon: Twitter,
+    },
+  ];
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -59,7 +77,7 @@ const Contact = () => {
     } catch (error) {
       setStatus({
         type: "error",
-        message: "Sorry, an error occurred while sending your message. Please try again!",
+        message: "Sorry, an error occurred while sending your message. Please try again! or contact me directly on linkedin.",
       });
     } finally {
       setIsLoading(false);
@@ -96,7 +114,31 @@ const Contact = () => {
                 <div className="p-2 border border-border rounded-lg">
                   <Mail className="h-4 w-4 text-muted-foreground" />
                 </div>
-                <span className="text-muted-foreground">sam.gmarvis@gmail.com</span>
+                <span className="text-muted-foreground">sgmarvis@gmail.com</span>
+              </div>
+              
+              {/* Social Media Links */}
+              <div className="space-y-3">
+                <h4 className="text-sm font-medium text-muted-foreground">Follow me</h4>
+                <div className="flex space-x-3">
+                  {socialLinks.map((social) => {
+                    const IconComponent = social.icon;
+                    return (
+                      <a
+                        key={social.name}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-2 p-2 border border-border rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors group"
+                      >
+                        <IconComponent className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
+                        <span className="text-sm text-muted-foreground group-hover:text-foreground">
+                          {social.name}
+                        </span>
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>

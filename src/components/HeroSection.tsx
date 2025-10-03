@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import { Download, ArrowRight } from "lucide-react";
+import {imageLinks} from "../lib/images";
 
 const HeroSection = () => {
   return (
@@ -18,7 +19,7 @@ const HeroSection = () => {
               </h1>
               
               <h2 className="text-xl lg:text-2xl text-muted-foreground fade-in-up-3">
-                FullStack Developer        
+                Software Engineer        
               </h2>
             </div>
 
@@ -52,7 +53,7 @@ const HeroSection = () => {
           <div className="relative fade-in-up-3">
             <div className="relative w-full max-w-md mx-auto">
               <Image
-                src="/profile_cicle.png"
+                src={imageLinks.profilePicture}
                 alt="Sam Gmarvis Njong"
                 width={400}
                 height={400}

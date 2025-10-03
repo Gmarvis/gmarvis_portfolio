@@ -38,10 +38,10 @@ const toolsSkills = [
 
 const SkillsSection = () => {
   const skillCategories = [
-    { title: "Frontend", skills: frontendSkills, color: "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800" },
-    { title: "Backend", skills: backendSkills, color: "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800" },
-    { title: "Database", skills: databaseSkills, color: "bg-purple-50 dark:bg-purple-950/20 border-purple-200 dark:border-purple-800" },
-    { title: "Tools & DevOps", skills: toolsSkills, color: "bg-orange-50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-800" }
+    { title: "Frontend", skills: frontendSkills },
+    { title: "Backend", skills: backendSkills },
+    { title: "Database", skills: databaseSkills },
+    { title: "Tools & DevOps", skills: toolsSkills }
   ];
 
   return (
@@ -63,7 +63,7 @@ const SkillsSection = () => {
               className="fade-in-up"
               style={{ animationDelay: `${categoryIndex * 0.2}s` }}
             >
-              <div className={`p-6 rounded-2xl border ${category.color} backdrop-blur-sm`}>
+              <div className="p-6 rounded-2xl border border-border bg-card backdrop-blur-sm">
                 <h3 className="text-xl font-semibold mb-4 text-foreground">
                   {category.title}
                 </h3>
