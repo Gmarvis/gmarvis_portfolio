@@ -1,0 +1,75 @@
+{
+  "name": "Sam Gmarvis - Software Engineer & Tech Entrepreneur",
+  "short_name": "Sam Gmarvis",
+  "description": "Portfolio of Sam Gmarvis - Software Engineer at Deliveru AI, Co-Founder & CEO of Nyota Talents. Expert in AI, full-stack development, and African tech ecosystem transformation.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/profile_cicle.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/profile_cicle.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "education", "productivity", "technology"],
+  "screenshots": [
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Sam Gmarvis Portfolio - Desktop View"
+    },
+    {
+      "src": "/screenshot-narrow.png",
+      "sizes": "640x1136",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Sam Gmarvis Portfolio - Mobile View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Profile",
+      "short_name": "Profile",
+      "description": "View Sam Gmarvis professional profile",
+      "url": "/profile",
+      "icons": [
+        {
+          "src": "/profile_cicle.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Connect via QR",
+      "short_name": "Connect",
+      "description": "Connect with Sam Gmarvis via QR code",
+      "url": "/connect",
+      "icons": [
+        {
+          "src": "/profile_cicle.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}

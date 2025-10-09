@@ -3,6 +3,10 @@ import { useEffect, useState, useCallback } from "react"
 import { Card } from "@/components/ui/card"
 import QRCode from "qrcode"
 import { Loader2, RefreshCw } from "lucide-react"
+import { Metadata } from "next"
+
+// Note: Since this is a client component, metadata should be handled at the layout level
+// or moved to a server component wrapper
 
 export default function ConnectPage() {
   const [isLoading, setIsLoading] = useState(true)

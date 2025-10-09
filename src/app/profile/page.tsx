@@ -4,6 +4,35 @@ import { Linkedin, MessageCircle, Github, Mail, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { imageLinks } from "@/lib/images"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Profile | Sam Gmarvis",
+  description: "Professional profile of Sam Gmarvis - Software Engineer at Deliveru AI, Co-Founder & CEO of Nyota Talents. Connect with me on social media platforms.",
+  keywords: ["Sam Gmarvis profile", "contact Sam Gmarvis", "social media", "professional network"],
+  openGraph: {
+    title: "Sam Gmarvis - Professional Profile",
+    description: "Software Engineer at Deliveru AI, Co-Founder & CEO of Nyota Talents. Connect with me on social media platforms.",
+    url: "https://samgmarvis.site/profile",
+    images: [
+      {
+        url: "/profile_cicle.png",
+        width: 400,
+        height: 400,
+        alt: "Sam Gmarvis Profile Picture",
+      }
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Sam Gmarvis - Professional Profile",
+    description: "Software Engineer at Deliveru AI, Co-Founder & CEO of Nyota Talents. Connect with me on social media platforms.",
+    images: ["/profile_cicle.png"],
+  },
+  alternates: {
+    canonical: "/profile",
+  },
+};
 
 export default function ProfilePage() {
   return (
