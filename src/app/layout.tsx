@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   description: "Minimalistic portfolio of Sam Gmarvis - Full Stack Web Developer specializing in modern web technologies and user-centric design.",
   keywords: ["Sam Gmarvis", "Full Stack Developer", "Web Developer", "React", "Next.js", "TypeScript"],
   authors: [{ name: "Sam Gmarvis Njong" }],
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
