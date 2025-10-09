@@ -71,9 +71,6 @@ const nextConfig = {
       }
     ]
   },
-  experimental: {
-    optimizeCss: true,
-  },
   poweredByHeader: false,
   compress: true,
 }
