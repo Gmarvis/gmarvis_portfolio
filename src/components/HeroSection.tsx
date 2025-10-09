@@ -38,14 +38,14 @@ const HeroSection = () => {
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               
-              <Link
+              {/* <Link
                 href="/SamGmarvisCV.pdf"
                 target="_blank"
                 className="inline-flex items-center justify-center px-6 py-3 border border-border rounded-lg font-medium hover:border-foreground transition-colors group"
               >
                 <Download className="mr-2 h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
                 Download CV
-              </Link>
+              </Link> */}
             </div>
           </div>
 
