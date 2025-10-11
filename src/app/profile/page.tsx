@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { imageLinks } from "@/lib/images"
 import { Metadata } from "next"
+import SaveContactButton from "@/components/SaveContactButton"
 
 export const metadata: Metadata = {
   title: "Profile | Sam Gmarvis",
@@ -123,6 +124,14 @@ export default function ProfilePage() {
                   Send Email
                 </Link>
               </Button>
+
+              <SaveContactButton 
+                variant="default" 
+                size="lg" 
+                className="w-full h-12"
+              >
+                Save My Contact
+              </SaveContactButton>
             </div>
 
             {/* Visit Portfolio Link */}

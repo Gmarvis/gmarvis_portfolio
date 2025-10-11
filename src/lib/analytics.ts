@@ -67,6 +67,12 @@ export const trackPortfolioEvents = {
     action: 'generate',
     category: 'engagement',
     label: 'QR Code Generated'
+  }),
+
+  contactSave: () => event({
+    action: 'save',
+    category: 'engagement',
+    label: 'Contact vCard Download'
   })
 };
 
