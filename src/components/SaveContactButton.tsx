@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import { UserPlus, Download, Check, AlertCircle } from "lucide-react";
-import { downloadMyContact, isVCardSupported } from "@/lib/vcard";
+import React, { useState, useEffect } from "react";
+import { UserPlus, Download, Check, AlertCircle, Smartphone, Share } from "lucide-react";
+import { downloadMyContact, isVCardSupported, getDownloadStrategy } from "@/lib/vcard";
 import { trackPortfolioEvents } from "@/lib/analytics";
 
 interface SaveContactButtonProps {
@@ -21,6 +21,11 @@ const SaveContactButton: React.FC<SaveContactButtonProps> = ({
   children
 }) => {
   const [status, setStatus] = useState<"idle" | "downloading" | "success" | "error">("idle");
+  const [downloadStrategy, setDownloadStrategy] = useState<'web-share' | 'standard' | 'fallback'>('standard');
+
+  useEffect(() => {
+    setDownloadStrategy(getDownloadStrategy());
+  }, []);
 
   const handleSaveContact = async () => {
     // Check browser support
@@ -40,7 +45,7 @@ const SaveContactButton: React.FC<SaveContactButtonProps> = ({
       downloadMyContact();
       
       setStatus("success");
-      setTimeout(() => setStatus("idle"), 2000);
+      setTimeout(() => setStatus("idle"), 3000);
     } catch (error) {
       console.error("Failed to save contact:", error);
       setStatus("error");
@@ -83,31 +88,56 @@ const SaveContactButton: React.FC<SaveContactButtonProps> = ({
       case "downloading":
         return (
           <>
-            {showIcon && <Download className={`${iconSizeClasses[size]} mr-2 animate-bounce`} />}
-            {children || "Saving..."}
+            {showIcon && (
+              downloadStrategy === 'web-share' ? 
+              <Share className={`${iconSizeClasses[size]} mr-2 animate-pulse`} /> :
+              <Download className={`${iconSizeClasses[size]} mr-2 animate-bounce`} />
+            )}
+            {children || (downloadStrategy === 'web-share' ? "Sharing..." : "Saving...")}
           </>
         );
       case "success":
         return (
           <>
             {showIcon && <Check className={`${iconSizeClasses[size]} mr-2 text-green-500`} />}
-            {children || "Saved!"}
+            {children || (downloadStrategy === 'web-share' ? "Shared!" : "Saved!")}
           </>
         );
       case "error":
         return (
           <>
             {showIcon && <AlertCircle className={`${iconSizeClasses[size]} mr-2 text-red-500`} />}
-            {children || "Error"}
+            {children || "Try again"}
           </>
         );
       default:
         return (
           <>
-            {showIcon && <UserPlus className={`${iconSizeClasses[size]} mr-2`} />}
-            {children || "Save Contact"}
+            {showIcon && (
+              downloadStrategy === 'web-share' ? 
+              <Share className={`${iconSizeClasses[size]} mr-2`} /> :
+              downloadStrategy === 'fallback' ?
+              <Smartphone className={`${iconSizeClasses[size]} mr-2`} /> :
+              <UserPlus className={`${iconSizeClasses[size]} mr-2`} />
+            )}
+            {children || (
+              downloadStrategy === 'web-share' ? "Share Contact" :
+              downloadStrategy === 'fallback' ? "Get Contact" :
+              "Save Contact"
+            )}
           </>
         );
+    }
+  };
+
+  const getButtonTitle = () => {
+    switch (downloadStrategy) {
+      case 'web-share':
+        return "Share contact information using your device's share menu";
+      case 'fallback':
+        return "Get contact information (may open in new tab on mobile)";
+      default:
+        return "Download contact card (vCard) to save in your contacts app";
     }
   };
 
@@ -117,7 +147,7 @@ const SaveContactButton: React.FC<SaveContactButtonProps> = ({
       disabled={status === "downloading"}
       className={buttonClasses}
       aria-label="Save contact information to your device"
-      title="Download contact card (vCard) to save in your contacts app"
+      title={getButtonTitle()}
     >
       {getButtonContent()}
     </button>
