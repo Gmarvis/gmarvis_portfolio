@@ -1,4 +1,7 @@
 import { contactData } from "../../data";
+import { saveAs } from 'file-saver';
+// @ts-ignore - vcf package doesn't have proper TypeScript types
+import VCF from 'vcf';
 
 export interface ContactData {
   name: string;
@@ -21,11 +24,64 @@ export interface ContactData {
 }
 
 /**
- * Generates vCard (VCF) content from contact data
+ * Generates vCard (VCF) content using the professional VCF library
  * @param contact - Contact information object
  * @returns vCard formatted string
  */
 export function generateVCard(contact: ContactData): string {
+  try {
+    // Create a new vCard using the VCF library
+    const vcard = new VCF();
+    
+    // Basic information
+    vcard.set('fn', contact.displayName);
+    vcard.set('n', contact.name.split(' ').reverse().join(';') + ';;;');
+    vcard.set('org', contact.organization);
+    vcard.set('title', contact.title);
+    
+    // Contact information
+    vcard.set('email', contact.email, { type: 'INTERNET' });
+    vcard.set('url', contact.website);
+    
+    // Phone number with proper Android formatting
+    if (contact.phone) {
+      vcard.set('tel', contact.phone, { type: ['CELL', 'VOICE'] });
+    }
+    
+    // Social media links as additional URLs
+    if (contact.socialLinks.linkedin) {
+      vcard.add('url', contact.socialLinks.linkedin, { type: 'LinkedIn' });
+    }
+    if (contact.socialLinks.github) {
+      vcard.add('url', contact.socialLinks.github, { type: 'GitHub' });
+    }
+    if (contact.socialLinks.twitter) {
+      vcard.add('url', contact.socialLinks.twitter, { type: 'Twitter' });
+    }
+    
+    // Description/note
+    if (contact.description) {
+      vcard.set('note', contact.description);
+    }
+    
+    // Location information
+    if (contact.location) {
+      vcard.set('adr', `;;;;;;${contact.location.country}`, { type: 'HOME' });
+    }
+    
+    // Return the formatted vCard string
+    return vcard.toString();
+  } catch (error) {
+    console.error('Error generating vCard with VCF library:', error);
+    // Fallback to manual generation if VCF library fails
+    return generateVCardManual(contact);
+  }
+}
+
+/**
+ * Fallback manual vCard generation (our previous implementation)
+ */
+function generateVCardManual(contact: ContactData): string {
   const vcard = [
     "BEGIN:VCARD",
     "VERSION:3.0",
@@ -37,13 +93,11 @@ export function generateVCard(contact: ContactData): string {
     `URL:${contact.website}`,
   ];
 
-  // Add phone number if available (Android-friendly format)
   if (contact.phone) {
     vcard.push(`TEL;TYPE=CELL:${contact.phone}`);
     vcard.push(`TEL;TYPE=VOICE:${contact.phone}`);
   }
 
-  // Add social media links as URLs (better Android support)
   if (contact.socialLinks.linkedin) {
     vcard.push(`URL:${contact.socialLinks.linkedin}`);
   }
@@ -54,131 +108,80 @@ export function generateVCard(contact: ContactData): string {
     vcard.push(`URL:${contact.socialLinks.twitter}`);
   }
 
-  // Add description/note if available
   if (contact.description) {
-    // Escape special characters for Android compatibility
     const cleanDescription = contact.description.replace(/[,;\\]/g, '\\$&');
     vcard.push(`NOTE:${cleanDescription}`);
   }
 
-  // Add location if available (Android-friendly format)
   if (contact.location) {
     vcard.push(`ADR;TYPE=HOME:;;;;;;${contact.location.country}`);
-    vcard.push(`GEO:${contact.location.countryCode}`);
   }
 
   vcard.push("END:VCARD");
-
-  // Use CRLF line endings for better compatibility
   return vcard.join("\r\n");
 }
 
 /**
- * Creates and downloads a vCard file
+ * Creates and downloads a vCard file using file-saver for better compatibility
  * @param contact - Contact information object
  * @param filename - Optional filename (defaults to contact name)
  */
 export function downloadVCard(contact: ContactData, filename?: string): void {
   try {
     const vcardContent = generateVCard(contact);
-    const blob = new Blob([vcardContent], { type: "text/vcard;charset=utf-8" });
     const fileName = filename || `${contact.displayName.replace(/\s+/g, "_")}_contact.vcf`;
     
-    // Check if it's Android device
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    // Create blob with proper MIME type for vCard
+    const blob = new Blob([vcardContent], { 
+      type: "text/vcard;charset=utf-8" 
+    });
     
-    if (isAndroid || isMobile) {
-      // For Android and mobile devices, use different approach
-      if (navigator.share) {
-        // Try Web Share API if available (modern Android browsers)
+    // Check if it's a mobile device
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    
+    if (isMobile && 'share' in navigator && navigator.canShare) {
+      // Try Web Share API for mobile devices (best experience)
+      try {
         const file = new File([vcardContent], fileName, { type: "text/vcard" });
-        navigator.share({
-          files: [file],
-          title: `${contact.displayName} Contact`,
-          text: `Save ${contact.displayName}'s contact information`
-        }).catch((error) => {
-          console.log("Web Share failed, falling back to download:", error);
-          fallbackDownload(blob, fileName);
-        });
-      } else {
-        // Fallback for older Android browsers
-        fallbackDownload(blob, fileName);
+        if (navigator.canShare({ files: [file] })) {
+          navigator.share({
+            files: [file],
+            title: `${contact.displayName} Contact`,
+            text: `Save ${contact.displayName}'s contact information`
+          }).catch((error) => {
+            console.log("Web Share failed, falling back to file-saver:", error);
+            // Fallback to file-saver
+            saveAs(blob, fileName);
+          });
+          return;
+        }
+      } catch (shareError) {
+        console.log("Web Share API failed:", shareError);
       }
-    } else {
-      // Desktop browsers - use standard download
-      const link = document.createElement("a");
-      const url = URL.createObjectURL(blob);
-      
-      link.href = url;
-      link.download = fileName;
-      link.style.display = "none";
-      
-      // Trigger download
-      document.body.appendChild(link);
-      link.click();
-      
-      // Cleanup
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
     }
+    
+    // Use file-saver for all other cases (handles Android/iOS/Desktop)
+    saveAs(blob, fileName);
+    
   } catch (error) {
     console.error("Error downloading vCard:", error);
+    // Last resort fallback
+    showAndroidInstructions();
     throw new Error("Failed to download contact. Please try again.");
   }
 }
 
 /**
- * Fallback download method for Android devices
- */
-function fallbackDownload(blob: Blob, filename: string): void {
-  try {
-    const url = URL.createObjectURL(blob);
-    
-    // Try to open in new window/tab (Android browsers often handle this better)
-    const newWindow = window.open(url, '_blank');
-    
-    if (!newWindow) {
-      // If popup blocked, try direct navigation
-      window.location.href = url;
-    }
-    
-    // Set timeout to clean up URL
-    setTimeout(() => {
-      URL.revokeObjectURL(url);
-    }, 10000);
-  } catch (error) {
-    console.error("Fallback download failed:", error);
-    // Last resort: show instructions to user
-    showAndroidInstructions();
-  }
-}
-
-/**
- * Shows instructions for Android users when automatic download fails
- */
-function showAndroidInstructions(): void {
-  const instructions = `
-    To save the contact on Android:
-    1. The contact file will open in a new tab
-    2. Tap the "Download" button in your browser
-    3. Open the downloaded .vcf file
-    4. Your contacts app will import the contact
-  `;
-  
-  alert(instructions);
-}
-
-/**
- * Downloads the default contact vCard
+ * Downloads the default contact vCard using file-saver
  */
 export function downloadMyContact(): void {
   downloadVCard(contactData, "Sam_Gmarvis_Contact.vcf");
 }
 
 /**
- * Alternative method for Android: Create a mailto link with contact info
- * This works better on some Android devices as a fallback
+ * Alternative method: Create a mailto link with contact info
+ * Useful as a universal fallback for all devices
  */
 export function shareContactViaEmail(): void {
   const contact = contactData;
@@ -206,7 +209,22 @@ ${contact.description}
 }
 
 /**
- * Checks if the browser supports vCard downloads
+ * Shows instructions for manual contact saving when all else fails
+ */
+function showAndroidInstructions(): void {
+  const instructions = `
+    To save the contact:
+    1. The contact file should download automatically
+    2. If not, check your browser's download folder
+    3. Tap the .vcf file to import to your contacts
+    4. Alternatively, copy the contact information manually
+  `;
+  
+  alert(instructions);
+}
+
+/**
+ * Checks if the browser supports vCard downloads with enhanced detection
  */
 export function isVCardSupported(): boolean {
   if (typeof window === "undefined") return false;
@@ -214,30 +232,31 @@ export function isVCardSupported(): boolean {
   // Basic support check
   const hasBasicSupport = "Blob" in window && "URL" in window;
   
-  // Enhanced support for Android
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const hasWebShare = "share" in navigator;
-  
-  // Android with Web Share API has good support
-  if (isAndroid && hasWebShare) return true;
-  
-  // All other cases need basic blob support
+  // file-saver provides excellent cross-platform support
+  // so we mainly just need basic blob support
   return hasBasicSupport;
 }
 
 /**
  * Gets the best download strategy for the current device
  */
-export function getDownloadStrategy(): 'web-share' | 'standard' | 'fallback' {
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-  const hasWebShare = "share" in navigator;
+export function getDownloadStrategy(): 'web-share' | 'file-saver' | 'email-fallback' {
+  if (typeof window === "undefined") return 'file-saver';
   
-  if ((isAndroid || isMobile) && hasWebShare) {
+  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+  const hasWebShare = "share" in navigator;
+  const hasCanShare = "canShare" in navigator;
+  
+  // Prefer Web Share API on mobile devices that support it well
+  if (isMobile && hasWebShare && hasCanShare) {
     return 'web-share';
-  } else if (!isAndroid && !isMobile) {
-    return 'standard';
-  } else {
-    return 'fallback';
   }
+  
+  // file-saver handles most cases excellently
+  if ("Blob" in window) {
+    return 'file-saver';
+  }
+  
+  // Last resort
+  return 'email-fallback';
 }

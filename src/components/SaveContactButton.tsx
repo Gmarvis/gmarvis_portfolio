@@ -21,7 +21,7 @@ const SaveContactButton: React.FC<SaveContactButtonProps> = ({
   children
 }) => {
   const [status, setStatus] = useState<"idle" | "downloading" | "success" | "error">("idle");
-  const [downloadStrategy, setDownloadStrategy] = useState<'web-share' | 'standard' | 'fallback'>('standard');
+  const [downloadStrategy, setDownloadStrategy] = useState<'web-share' | 'file-saver' | 'email-fallback'>('file-saver');
 
   useEffect(() => {
     setDownloadStrategy(getDownloadStrategy());
@@ -116,13 +116,13 @@ const SaveContactButton: React.FC<SaveContactButtonProps> = ({
             {showIcon && (
               downloadStrategy === 'web-share' ? 
               <Share className={`${iconSizeClasses[size]} mr-2`} /> :
-              downloadStrategy === 'fallback' ?
+              downloadStrategy === 'email-fallback' ?
               <Smartphone className={`${iconSizeClasses[size]} mr-2`} /> :
               <UserPlus className={`${iconSizeClasses[size]} mr-2`} />
             )}
             {children || (
               downloadStrategy === 'web-share' ? "Share Contact" :
-              downloadStrategy === 'fallback' ? "Get Contact" :
+              downloadStrategy === 'email-fallback' ? "Get Contact" :
               "Save Contact"
             )}
           </>
@@ -134,8 +134,8 @@ const SaveContactButton: React.FC<SaveContactButtonProps> = ({
     switch (downloadStrategy) {
       case 'web-share':
         return "Share contact information using your device's share menu";
-      case 'fallback':
-        return "Get contact information (may open in new tab on mobile)";
+      case 'email-fallback':
+        return "Get contact information via email (universal fallback)";
       default:
         return "Download contact card (vCard) to save in your contacts app";
     }
