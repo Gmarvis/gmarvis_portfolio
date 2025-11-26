@@ -82,15 +82,15 @@ const HeroSection = ({ data }: HeroSectionProps) => {
 
           {/* Profile Image */}
           {data?.profileImage && (
-            <div className="relative fade-in-up lg:fade-in-right group">
+            <div className="relative fade-in-up lg:fade-in-right">
               <div className="relative w-full max-w-md mx-auto">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-2xl transform rotate-6 group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-2xl transform rotate-6"></div>
                 <Image
                   src={urlFor(data.profileImage).width(500).height(600).url()}
                   alt="Profile"
                   width={500}
                   height={600}
-                  className="relative z-10 w-full rounded-2xl shadow-2xl object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-in-out transform group-hover:scale-105"
+                  className="relative z-10 w-full rounded-2xl shadow-2xl object-cover"
                   priority
                 />
               </div>

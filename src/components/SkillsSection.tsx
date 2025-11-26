@@ -1,48 +1,66 @@
 "use client";
 
 import React from "react";
+import type { Skill } from "@/lib/sanity/types";
 
-const frontendSkills = [
-  "HTML/CSS",
-  "JavaScript", 
-  "TypeScript",
-  "React.js",
-  "Next.js",
-  "Tailwind CSS"
-];
+interface SkillsSectionProps {
+  data: Skill[] | null;
+}
 
-const backendSkills = [
-  "Node.js",
-  "NestJS", 
-  "Express",
-  "REST APIs",
-  "GraphQL"
-];
+const SkillsSection = ({ data }: SkillsSectionProps) => {
+  // Group skills by category
+  const groupedSkills = data?.reduce((acc, skill) => {
+    if (!acc[skill.category]) {
+      acc[skill.category] = [];
+    }
+    acc[skill.category].push(skill);
+    return acc;
+  }, {} as Record<string, Skill[]>) || {};
 
-const databaseSkills = [
-  "MySQL",
-  "MongoDB", 
-  "PostgreSQL",
-  "Firebase",
-  "Supabase"
-];
-
-const toolsSkills = [
-  "Git",
-  "Docker", 
-  "AWS",
-  "Vercel",
-  "Socket.io",
-  "Redis"
-];
-
-const SkillsSection = () => {
-  const skillCategories = [
-    { title: "Frontend", skills: frontendSkills },
-    { title: "Backend", skills: backendSkills },
-    { title: "Database", skills: databaseSkills },
-    { title: "Tools & DevOps", skills: toolsSkills }
+  // Fallback data if CMS is not available
+  const frontendSkills = [
+    "JavaScript", 
+    "TypeScript",
+    "React.js",
+    "Next.js",
   ];
+
+  const backendSkills = [
+    "Node.js",
+    "NestJS", 
+    "Express",
+    "REST APIs",
+    "GraphQL"
+  ];
+
+  const databaseSkills = [
+    "MySQL",
+    "MongoDB", 
+    "PostgreSQL",
+    "Firebase",
+    "Supabase"
+  ];
+
+  const toolsSkills = [
+    "Git",
+    "Docker", 
+    "AWS",
+    "Vercel",
+    "Socket.io",
+    "Redis"
+  ];
+
+  // Use CMS data if available, otherwise use fallback
+  const skillCategories = Object.keys(groupedSkills).length > 0 ? 
+    Object.entries(groupedSkills).map(([category, categorySkills]) => ({
+      title: category.charAt(0).toUpperCase() + category.slice(1),
+      skills: categorySkills
+    })) : [
+      { title: "Frontend", skills: frontendSkills.map(name => ({ name, proficiencyLevel: 8 })) },
+      { title: "Backend", skills: backendSkills.map(name => ({ name, proficiencyLevel: 7 })) },
+      { title: "Database", skills: databaseSkills.map(name => ({ name, proficiencyLevel: 7 })) },
+      { title: "Tools & DevOps", skills: toolsSkills.map(name => ({ name, proficiencyLevel: 6 })) }
+    ];
 
   return (
     <section id="skills" className="py-20">
@@ -68,17 +86,21 @@ const SkillsSection = () => {
                   {category.title}
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {category.skills.map((skill, skillIndex) => (
-                    <div
-                      key={skill}
-                      className="group p-3 bg-background/60 hover:bg-background rounded-lg border border-border/50 hover:border-border transition-all duration-300 hover:shadow-sm"
-                      style={{ animationDelay: `${categoryIndex * 0.2 + skillIndex * 0.1}s` }}
-                    >
-                      <span className="text-sm font-medium text-foreground group-hover:text-muted-foreground transition-colors">
-                        {skill}
-                      </span>
-                    </div>
-                  ))}
+                  {category.skills.map((skill, skillIndex) => {
+                    const skillName = typeof skill === 'string' ? skill : skill.name;
+                    
+                    return (
+                      <div
+                        key={skillName}
+                        className="group p-3 bg-background/60 hover:bg-accent rounded-lg border border-border/50 hover:border-border transition-all duration-300 hover:shadow-sm"
+                        style={{ animationDelay: `${categoryIndex * 0.2 + skillIndex * 0.1}s` }}
+                      >
+                        <span className="text-sm font-medium text-foreground group-hover:text-muted-foreground transition-colors">
+                          {skillName}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>

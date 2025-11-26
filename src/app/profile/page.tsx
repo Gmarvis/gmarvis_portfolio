@@ -77,62 +77,63 @@ export default function ProfilePage() {
               </p>
             </div>
 
-            {/* Social Media Buttons */}
-            <div className="space-y-3">
-              <Button asChild className="w-full h-12 text-base" variant="default">
+            {/* Social Media Buttons - Flex Layout */}
+            <div className="flex flex-wrap justify-between gap-4 max-w-64 mx-auto">
+              <Button asChild className="w-28 h-28 text-sm border-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 dark:border-blue-400 dark:text-blue-400" variant="outline">
                 <Link
                   href="https://linkedin.com/in/samgmarvis"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3"
+                  className="flex flex-col items-center justify-center gap-2"
                 >
-                  <Linkedin className="w-5 h-5" />
-                  Connect on LinkedIn
+                  <Linkedin className="w-6 h-6" />
+                  LinkedIn
                 </Link>
               </Button>
 
-              <Button asChild className="w-full h-12 text-base" variant="outline">
+              <Button asChild className="w-28 h-28 text-sm border-2 border-gray-900 text-gray-900 hover:bg-gray-50 dark:border-gray-300 dark:text-gray-300 dark:hover:bg-gray-800" variant="outline">
                 <Link
                   href="https://github.com/gmarvis"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3"
+                  className="flex flex-col items-center justify-center gap-2"
                 >
-                  <Github className="w-5 h-5" />
-                  View GitHub Profile
+                  <Github className="w-6 h-6" />
+                  GitHub
                 </Link>
               </Button>
 
-              <Button asChild className="w-full h-12 text-base bg-green-600 hover:bg-green-700" variant="default">
+              <Button asChild className="w-28 h-28 text-sm border-2 border-green-500 text-green-500 hover:bg-green-50 dark:border-green-400 dark:text-green-400 dark:hover:bg-green-950" variant="outline">
                 <Link
                   href="https://wa.me/+237677877572"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3"
+                  className="flex flex-col items-center justify-center gap-2"
                 >
-                  <MessageCircle className="w-5 h-5" />
-                  Message on WhatsApp
+                  <MessageCircle className="w-6 h-6" />
+                  WhatsApp
                 </Link>
               </Button>
 
-              <Button asChild className="w-full h-12 text-base" variant="outline">
+              <Button asChild className="w-28 h-28 text-sm border-2 border-red-500 text-red-500 hover:bg-red-50 dark:border-red-400 dark:text-red-400 dark:hover:bg-red-950" variant="outline">
                 <Link
                   href="mailto:sam.gmarvis@gmail.com"
-                  className="flex items-center justify-center gap-3"
+                  className="flex flex-col items-center justify-center gap-2"
                 >
-                  <Mail className="w-5 h-5" />
-                  Send Email
+                  <Mail className="w-6 h-6" />
+                  Email
                 </Link>
               </Button>
-
-              <SaveContactButton 
-                variant="default" 
-                size="lg" 
-                className="w-full h-12"
-              >
-                Save My Contact
-              </SaveContactButton>
             </div>
+
+            {/* Save Contact Button - Full Width */}
+            <SaveContactButton 
+              variant="default" 
+              size="lg" 
+              className="w-full h-12"
+            >
+              Save My Contact
+            </SaveContactButton>
 
             {/* Visit Portfolio Link */}
             <div className="pt-4 border-t border-border">
