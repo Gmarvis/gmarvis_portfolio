@@ -4,8 +4,13 @@ import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { Send, Mail, User, MessageSquare, Github, Linkedin, Twitter } from "lucide-react";
 import SpinnerLoader from "./atoms/SpinnerLoader";
+import type { ContactInfo } from "@/lib/sanity/types";
 
-const Contact = () => {
+interface ContactProps {
+  data: ContactInfo | null;
+}
+
+const Contact = ({ data }: ContactProps) => {
   const form = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -18,23 +23,30 @@ const Contact = () => {
     message: string;
   }>({ type: null, message: "" });
 
-  const socialLinks = [
+  // Get social links from CMS data or use fallback
+  const socialLinks = data?.socialLinks || [
     {
-      name: "GitHub",
+      platform: "github",
       url: "https://github.com/Gmarvis",
-      icon: Github,
     },
     {
-      name: "LinkedIn",
+      platform: "linkedin", 
       url: "https://linkedin.com/in/samgmarvis",
-      icon: Linkedin,
     },
     {
-      name: "Twitter",
+      platform: "twitter",
       url: "https://twitter.com/sam_gmarvis",
-      icon: Twitter,
     },
   ];
+
+  const getIconForPlatform = (platform: string) => {
+    switch (platform.toLowerCase()) {
+      case 'github': return Github;
+      case 'linkedin': return Linkedin;
+      case 'twitter': return Twitter;
+      default: return Mail;
+    }
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -60,11 +72,20 @@ const Contact = () => {
     setIsLoading(true);
 
     try {
+      // Check if environment variables are available
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const userId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID;
+
+      if (!serviceId || !templateId || !userId) {
+        throw new Error("EmailJS configuration is missing");
+      }
+
       await emailjs.sendForm(
-        "service_k0kw658",
-        "template_3rvzfiq",
+        serviceId,
+        templateId,
         form.current!,
-        { publicKey: "vq3hgDoUtK5_tEs1Z" }
+        { publicKey: userId }
       );
 
       setStatus({
@@ -75,9 +96,10 @@ const Contact = () => {
       setFormData({ name: "", email: "", message: "" });
       form.current?.reset();
     } catch (error) {
+      console.error("EmailJS Error:", error);
       setStatus({
         type: "error",
-        message: "Sorry, an error occurred while sending your message. Please try again! or contact me directly on linkedin.",
+        message: "Sorry, an error occurred while sending your message. Please try again or contact me directly on LinkedIn.",
       });
     } finally {
       setIsLoading(false);
@@ -124,10 +146,10 @@ const Contact = () => {
                 <h4 className="text-sm font-medium text-muted-foreground">Follow me</h4>
                 <div className="flex space-x-3">
                   {socialLinks.map((social) => {
-                    const IconComponent = social.icon;
+                    const IconComponent = getIconForPlatform(social.platform);
                     return (
                       <a
-                        key={social.name}
+                        key={social.platform}
                         href={social.url}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -135,7 +157,7 @@ const Contact = () => {
                       >
                         <IconComponent className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
                         <span className="text-sm text-muted-foreground group-hover:text-foreground">
-                          {social.name}
+                          {social.platform.charAt(0).toUpperCase() + social.platform.slice(1)}
                         </span>
                       </a>
                     );

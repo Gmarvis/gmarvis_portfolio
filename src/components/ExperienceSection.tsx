@@ -1,9 +1,31 @@
 "use client";
 
 import React from "react";
-import { experienceData } from "../../data";
+import Image from "next/image";
+import type { Experience } from "@/lib/sanity/types";
+import { PortableText } from '@portabletext/react';
+import { urlFor } from "@/lib/sanity/image";
 
-const ExperienceSection = () => {
+
+
+interface ExperienceSectionProps {
+  data?: Experience[] | null;
+}
+
+const ExperienceSection = ({ data }: ExperienceSectionProps) => {
+  console.log('Experience data received:', data);
+  console.log('Data type:', typeof data);
+  console.log('Is array:', Array.isArray(data));
+  console.log('Length:', data?.length);
+  
+  // Only show section if we have CMS data
+  if (!data || data.length === 0) {
+    console.log('Hiding experience section - no data');
+    return null;
+  }
+  
+  console.log('Showing experience section with', data.length, 'items');
+  
   return (
     <section id="experience" className="py-20 bg-background/50">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -17,67 +39,127 @@ const ExperienceSection = () => {
         </div>
 
         <div className="space-y-6">
-          {experienceData.map((experience, index) => (
-            <div
-              key={index}
-              className="fade-in-up"
-              style={{ animationDelay: `${index * 0.2}s` }}
-            >
-              <div className="group p-6 rounded-xl border border-border bg-card backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-                {/* Header */}
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-                  <div>
-                    <h3 className="text-base lg:text-sm text-foreground mb-1">
-                      {experience.position}
-                    </h3>
-                    <h4 className="text-base font-semibold text-primary mb-1">
-                      {experience.company}
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      {experience.location}
-                    </p>
-                  </div>
-                  <div className="mt-3 lg:mt-0">
-                    <span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                      {experience.duration}
-                    </span>
-                  </div>
-                </div>
+          {data.map((experience: any, index: number) => {
+            // Handle date parsing with error handling
+            let startDate, endDate;
+            try {
+              startDate = new Date(experience.startDate);
+              endDate = experience.endDate ? new Date(experience.endDate) : null;
+            } catch (error) {
+              console.error('Date parsing error:', error);
+              startDate = new Date();
+              endDate = null;
+            }
+            
+            const formatDate = (date: Date) => {
+              try {
+                return date.toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'short' 
+                });
+              } catch (error) {
+                return 'Invalid Date';
+              }
+            };
 
-                {/* Description */}
-                <div className="mb-4">
-                  <ul className="space-y-2">
-                    {experience.description.map((desc, descIndex) => (
-                      <li
-                        key={descIndex}
-                        className="flex items-start space-x-2 text-muted-foreground text-sm"
-                      >
-                        <span className="flex-shrink-0 w-1.5 h-1.5 bg-primary rounded-full mt-1.5"></span>
-                        <span className="leading-relaxed">{desc}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+            // Use jobTitle field (matches CMS schema)
+            const jobTitle = experience.jobTitle;
+            const description = experience.description;
 
-                {/* Technologies */}
-                <div>
-                  <h5 className="text-xs font-semibold text-foreground mb-2">
-                    Technologies & Tools:
-                  </h5>
-                  <div className="flex flex-wrap gap-1.5">
-                    {experience.technologies.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-2 py-1 bg-background/60 hover:bg-background rounded-md border border-border/50 hover:border-border text-xs font-medium text-foreground transition-all duration-300 hover:shadow-sm"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+            return (
+              <div
+                key={experience._id}
+                className="fade-in-up"
+                style={{ animationDelay: `${index * 0.2}s` }}
+              >
+                <div className="group p-6 rounded-xl border border-border bg-card backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+                  {/* Header */}
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
+                    <div className="flex items-start gap-4 flex-1">
+                      {/* Company Logo */}
+                      {experience.companyLogo && (
+                        <div className="flex-shrink-0">
+                          <div className="w-12 h-12 rounded-lg overflow-hidden border border-border bg-background/50">
+                            <Image
+                              src={urlFor(experience.companyLogo).width(48).height(48).url()}
+                              alt={`${experience.company} logo`}
+                              width={48}
+                              height={48}
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-1">
+                          {jobTitle}
+                        </h3>
+                        <div className="flex items-center gap-2 text-muted-foreground mb-2">
+                          <span className="font-medium text-primary">{experience.company}</span>
+                          {experience.location && (
+                            <>
+                              <span>•</span>
+                              <span>{experience.location}</span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground lg:text-right">
+                      <span>{formatDate(startDate)}</span>
+                      <span>-</span>
+                      <span>{experience.current ? 'Present' : (endDate ? formatDate(endDate) : 'Present')}</span>
+                    </div>
                   </div>
+
+                  {/* Description */}
+                  <div className="mb-4">
+                    <div className="text-muted-foreground leading-relaxed">
+                      {Array.isArray(description) ? (
+                        <PortableText value={description} />
+                      ) : (
+                        <p>{description}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Achievements */}
+                  {experience.achievements && experience.achievements.length > 0 && (
+                    <div className="mb-4">
+                      <h4 className="text-sm font-medium text-foreground mb-2">Key Achievements</h4>
+                      <ul className="space-y-1">
+                        {experience.achievements.map((achievement: string, idx: number) => (
+                          <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                            <span className="text-primary mt-1.5 flex-shrink-0">•</span>
+                            <span>{achievement}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Technologies */}
+                  {experience.technologies && experience.technologies.length > 0 && (
+                    <div>
+                      <h4 className="text-sm font-medium text-foreground mb-3">Technologies Used</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {experience.technologies.map((tech: string, techIndex: number) => (
+                          <span
+                            key={techIndex}
+                            className="px-3 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full border border-primary/20"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
