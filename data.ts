@@ -64,3 +64,8 @@ export const experienceData = [
     technologies: ["React", "TypeScript"],
   },
 ];
+
+
+const newdataSet = {
+new :"data"
+}
